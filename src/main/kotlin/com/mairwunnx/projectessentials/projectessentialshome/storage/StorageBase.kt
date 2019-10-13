@@ -7,6 +7,7 @@ import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonConfiguration
 import org.apache.logging.log4j.LogManager
 import java.io.File
+import java.io.FileNotFoundException
 import kotlin.system.measureTimeMillis
 
 @UseExperimental(UnstableDefault::class)
@@ -43,11 +44,15 @@ object StorageBase {
             users?.forEach {
                 logger.debug("        - processing $it user home data ...")
                 val userId = it
-                val userDataRaw = File(
-                    userDataFolder + File.separator + it + File.separator + "home.json"
-                ).readText()
-                val userHomeClass = Json.parse(HomeModel.serializer(), userDataRaw)
-                userHomeData[userId] = userHomeClass
+                try {
+                    val userDataRaw = File(
+                        userDataFolder + File.separator + it + File.separator + "home.json"
+                    ).readText()
+                    val userHomeClass = Json.parse(HomeModel.serializer(), userDataRaw)
+                    userHomeData[userId] = userHomeClass
+                } catch (_: FileNotFoundException) {
+                    logger.info("        - loading home data for $it skipped! not found!")
+                }
             }
         }
         logger.info("Loading user home data done configurations with ${elapsedTime}ms")
