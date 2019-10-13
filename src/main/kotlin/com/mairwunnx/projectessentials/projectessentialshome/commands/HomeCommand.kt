@@ -18,10 +18,9 @@ import net.minecraft.entity.player.ServerPlayerEntity
 import net.minecraft.world.dimension.DimensionType
 import org.apache.logging.log4j.LogManager
 
+@Suppress("DuplicatedCode")
 object HomeCommand {
-    private val aliases = arrayOf(
-        "home", "ehome"
-    )
+    private val aliases = arrayOf("home", "ehome")
     private val logger = LogManager.getLogger()
 
     fun register(dispatcher: CommandDispatcher<CommandSource>) {
@@ -71,7 +70,8 @@ object HomeCommand {
                         return@forEach
                     }
                 }
-                // sendMsg home not found
+                sendMsg("home", c.source, "home.not_found")
+                logger.info("Player ${player.name.string} try teleport to not exist home $homeName")
             } else {
                 sendMsg("home", c.source, "home.restricted")
                 logger.info(
@@ -99,8 +99,10 @@ object HomeCommand {
         )
         if (player.world.worldInfo.worldName == clientWorld) {
             player.teleport(targetWorld, xPos, yPos, zPos, yaw, pitch)
+            sendMsg("home", player.commandSource, "home.success")
         } else {
-            // sendMsg home not found
+            sendMsg("home", player.commandSource, "home.not_found")
+            logger.info("Player ${player.name.string} try teleport to not exist home ${home.home}")
         }
     }
 }

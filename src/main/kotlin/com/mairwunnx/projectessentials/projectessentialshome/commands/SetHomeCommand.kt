@@ -16,10 +16,9 @@ import net.minecraft.command.CommandSource
 import net.minecraft.command.Commands
 import org.apache.logging.log4j.LogManager
 
+@Suppress("DuplicatedCode")
 object SetHomeCommand {
-    private val aliases = arrayOf(
-        "sethome", "esethome"
-    )
+    private val aliases = arrayOf("sethome", "esethome")
     private val logger = LogManager.getLogger()
 
     fun register(dispatcher: CommandDispatcher<CommandSource>) {
