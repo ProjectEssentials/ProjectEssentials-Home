@@ -1,7 +1,7 @@
 {
   "project_essentials_home.home.restricted": "§cYou §7don't have permission §cto teleport to home.",
-  "project_essentials_home.home.success": "§6Teleported to home §7%0§6.",
+  "project_essentials_home.home.success": "§6Teleported to home §7%s§6.",
   "project_essentials_home.home.set.restricted": "§cYou §7don't have permission §cto set new home.",
-  "project_essentials_home.home.set.success": "§6New home with name §7\"%0\" §6has been saved.",
-  "project_essentials_home.home.not_found": "§cHome with name §7\"%0\" §cnot found."
+  "project_essentials_home.home.set.success": "§6New home with name §7\"%s\" §6has been saved.",
+  "project_essentials_home.home.not_found": "§cHome with name §7\"%s\" §cnot found."
 }
