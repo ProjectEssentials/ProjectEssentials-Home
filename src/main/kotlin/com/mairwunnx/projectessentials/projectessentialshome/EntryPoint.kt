@@ -1,5 +1,6 @@
 package com.mairwunnx.projectessentials.projectessentialshome
 
+import com.mairwunnx.projectessentials.projectessentialshome.commands.DelHomeCommand
 import com.mairwunnx.projectessentials.projectessentialshome.commands.HomeCommand
 import com.mairwunnx.projectessentials.projectessentialshome.commands.SetHomeCommand
 import com.mairwunnx.projectessentials.projectessentialshome.storage.StorageBase
@@ -41,6 +42,7 @@ class EntryPoint : EssBase() {
         logger.info("Command registering is starting ...")
         HomeCommand.register(cmdDispatcher)
         SetHomeCommand.register(cmdDispatcher)
+        DelHomeCommand.register(cmdDispatcher)
     }
 
     @Suppress("UNUSED_PARAMETER")

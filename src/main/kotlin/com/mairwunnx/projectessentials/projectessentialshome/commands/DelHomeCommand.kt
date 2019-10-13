@@ -17,12 +17,12 @@ import net.minecraft.command.Commands
 import org.apache.logging.log4j.LogManager
 
 @Suppress("DuplicatedCode")
-object SetHomeCommand {
-    private val aliases = arrayOf("sethome", "esethome")
+object DelHomeCommand {
+    private val aliases = arrayOf("delhome", "edelhome", "removehome", "remhome")
     private val logger = LogManager.getLogger()
 
     fun register(dispatcher: CommandDispatcher<CommandSource>) {
-        logger.info("    - register \"/sethome\" command ...")
+        logger.info("    - register \"/delhome\" command ...")
         aliases.forEach { command ->
             dispatcher.register(
                 literal<CommandSource>(command).executes {
@@ -44,7 +44,7 @@ object SetHomeCommand {
             Class.forName(
                 "com.mairwunnx.projectessentialscooldown.essentials.CommandsAliases"
             )
-            CommandsAliases.aliases["sethome"] = aliases.toMutableList()
+            CommandsAliases.aliases["delhome"] = aliases.toMutableList()
             logger.info("        - applying aliases: $aliases")
         } catch (_: ClassNotFoundException) {
             // ignored
@@ -54,47 +54,34 @@ object SetHomeCommand {
     private fun execute(c: CommandContext<CommandSource>): Int {
         if (c.isPlayerSender()) {
             val player = c.source.asPlayer()
-            if (PermissionsAPI.hasPermission(player.name.string, "ess.home.set")) {
+            if (PermissionsAPI.hasPermission(player.name.string, "ess.home.remove")) {
                 val playerUUID = player.uniqueID.toString()
                 val homeName: String = try {
                     StringArgumentType.getString(c, "home name")
                 } catch (_: IllegalArgumentException) {
                     "home"
                 }
-                val clientWorld = c.source.world.worldInfo.worldName
-                val worldId = c.source.world.worldType.id
-                val xPos = player.posX.toInt()
-                val yPos = player.posY.toInt()
-                val zPos = player.posZ.toInt()
-                val yaw = player.rotationYaw
-                val pitch = player.rotationPitch
                 val homeModel = StorageBase.getData(playerUUID).homes
-                homeModel.add(
-                    HomeModel.Home(
-                        homeName, clientWorld, worldId, xPos, yPos, zPos, yaw, pitch
-                    )
-                )
-                StorageBase.setData(playerUUID, HomeModel(homeModel))
-                sendMsg("home", c.source, "home.set.success", homeName)
-                logger.info("New home point for ${player.name.string} installed with data: ")
-                logger.info("    - name: $homeName")
-                logger.info("    - world / world id: $clientWorld / $worldId")
-                logger.info("    - xpos: $xPos")
-                logger.info("    - ypos: $yPos")
-                logger.info("    - zpos: $zPos")
-                logger.info("    - yaw: $yaw")
-                logger.info("    - pitch: $pitch")
-                logger.info("Executed command \"/sethome\" from ${player.name.string}")
+                StorageBase.getData(playerUUID).homes.forEach {
+                    if (it.home == homeName) {
+                        homeModel.remove(it)
+                        StorageBase.setData(playerUUID, HomeModel(homeModel))
+                        sendMsg("home", c.source, "home.remove.success", homeName)
+                        logger.info("Executed command \"/delhome\" from ${player.name.string}")
+                        return 0
+                    }
+                }
+                sendMsg("home", c.source, "home.not_found", homeName)
             } else {
-                sendMsg("home", c.source, "home.set.restricted")
+                sendMsg("home", c.source, "home.remove.restricted")
                 logger.info(
                     PERMISSION_LEVEL
                         .replace("%0", player.name.string)
-                        .replace("%1", "sethome")
+                        .replace("%1", "delhome")
                 )
             }
         } else {
-            logger.info(ONLY_PLAYER_CAN.replace("%0", "sethome"))
+            logger.info(ONLY_PLAYER_CAN.replace("%0", "delhome"))
         }
         return 0
     }
