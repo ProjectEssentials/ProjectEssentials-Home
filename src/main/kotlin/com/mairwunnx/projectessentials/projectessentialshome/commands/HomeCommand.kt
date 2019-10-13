@@ -67,10 +67,10 @@ object HomeCommand {
                 home.homes.forEach {
                     if (it.home == homeName) {
                         moveToHome(player, it)
-                        return@forEach
+                        return 0
                     }
                 }
-                sendMsg("home", c.source, "home.not_found")
+                sendMsg("home", c.source, "home.not_found", homeName)
                 logger.info("Player ${player.name.string} try teleport to not exist home $homeName")
             } else {
                 sendMsg("home", c.source, "home.restricted")
@@ -101,7 +101,7 @@ object HomeCommand {
             player.teleport(targetWorld, xPos, yPos, zPos, yaw, pitch)
             sendMsg("home", player.commandSource, "home.success", home.home)
         } else {
-            sendMsg("home", player.commandSource, "home.not_found")
+            sendMsg("home", player.commandSource, "home.not_found", home.home)
             logger.info("Player ${player.name.string} try teleport to not exist home ${home.home}")
         }
     }
