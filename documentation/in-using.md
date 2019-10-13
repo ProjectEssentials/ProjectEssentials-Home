@@ -37,7 +37,7 @@ Run the game, check the number of mods, if the list of mods contains `Project Es
 
 After that, go into a single world, then try to write the `/home` command, if you **get an error** that you do not have permissions, then the modification works as it should.
 
-#### 1.4 Control spawn via minecraft commands.
+#### 1.4 Control your homes via minecraft commands.
 
 We made the commands for you:
 
