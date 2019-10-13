@@ -99,7 +99,7 @@ object HomeCommand {
         )
         if (player.world.worldInfo.worldName == clientWorld) {
             player.teleport(targetWorld, xPos, yPos, zPos, yaw, pitch)
-            sendMsg("home", player.commandSource, "home.success")
+            sendMsg("home", player.commandSource, "home.success", home.home)
         } else {
             sendMsg("home", player.commandSource, "home.not_found")
             logger.info("Player ${player.name.string} try teleport to not exist home ${home.home}")
