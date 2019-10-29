@@ -1,0 +1,9 @@
+{
+  "project_essentials_home.home.restricted": "§cDu §7bist nicht berechtigt §cum nach Hause zu teleportieren.",
+  "project_essentials_home.home.success": "§6Nach Hause teleportiert §7%s§6.",
+  "project_essentials_home.home.set.restricted": "§cDu §7bist nicht berechtigt §cum dein Zuhause zu setzen.",
+  "project_essentials_home.home.set.success": "§6Neues Zuhause §7\"%s\" §6wurde gespeichert.",
+  "project_essentials_home.home.remove.restricted": "§cYDu §7bist nicht berechtigt §cum dein Zuhause zu löschen.",
+  "project_essentials_home.home.remove.success": "§6Zuhause §7\"%s\" §6wurde gelöscht.",
+  "project_essentials_home.home.not_found": "§cZuhause mit dem Namen §7\"%s\" §ckonnte nicht gefunden werden."
+}
