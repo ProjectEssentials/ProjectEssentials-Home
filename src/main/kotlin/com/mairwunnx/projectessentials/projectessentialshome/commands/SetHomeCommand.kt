@@ -10,6 +10,7 @@ import com.mairwunnx.projectessentials.projectessentialshome.EntryPoint.Companio
 import com.mairwunnx.projectessentials.projectessentialshome.models.HomeModel
 import com.mairwunnx.projectessentials.projectessentialshome.storage.StorageBase
 import com.mojang.brigadier.CommandDispatcher
+import com.mojang.brigadier.arguments.BoolArgumentType
 import com.mojang.brigadier.arguments.StringArgumentType
 import com.mojang.brigadier.builder.LiteralArgumentBuilder.literal
 import com.mojang.brigadier.context.CommandContext
@@ -34,7 +35,15 @@ object SetHomeCommand {
                         "home name", StringArgumentType.string()
                     ).executes {
                         return@executes execute(it)
-                    }
+                    }.then(
+                        Commands.argument(
+                            "override", BoolArgumentType.bool()
+                        ).executes {
+                            return@executes execute(
+                                it, BoolArgumentType.getBool(it, "override")
+                            )
+                        }
+                    )
                 )
             )
         }
@@ -45,7 +54,10 @@ object SetHomeCommand {
         CommandsAliases.aliases["sethome"] = aliases.toMutableList()
     }
 
-    private fun execute(c: CommandContext<CommandSource>): Int {
+    private fun execute(
+        c: CommandContext<CommandSource>,
+        override: Boolean = false
+    ): Int {
         if (c.isPlayerSender()) {
             val player = c.source.asPlayer()
             if (hasPermission(player, "ess.home.set")) {
@@ -63,6 +75,16 @@ object SetHomeCommand {
                 val yaw = player.rotationYaw
                 val pitch = player.rotationPitch
                 val homeModel = StorageBase.getData(playerUUID).homes
+
+                if (!override) {
+                    homeModel.forEach {
+                        if (it.home == homeName) {
+                            sendMsg("home", c.source, "home.set.already_exist", homeName)
+                            return 0
+                        }
+                    }
+                }
+
                 homeModel.add(
                     HomeModel.Home(
                         homeName, clientWorld, worldId, xPos, yPos, zPos, yaw, pitch
