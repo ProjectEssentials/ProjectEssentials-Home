@@ -83,6 +83,10 @@ object SetHomeCommand {
                             return 0
                         }
                     }
+                } else {
+                    homeModel.removeAll {
+                        it.home == homeName
+                    }
                 }
 
                 homeModel.add(
