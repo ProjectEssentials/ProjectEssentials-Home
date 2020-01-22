@@ -1,6 +1,6 @@
 package com.mairwunnx.projectessentials.projectessentialshome.models
 
-import com.mairwunnx.projectessentialscore.extensions.empty
+import com.mairwunnx.projectessentials.core.extensions.empty
 import kotlinx.serialization.Serializable
 
 @Serializable
