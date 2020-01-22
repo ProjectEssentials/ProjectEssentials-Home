@@ -1,13 +1,14 @@
 package com.mairwunnx.projectessentials.projectessentialshome.commands
 
+import com.mairwunnx.projectessentials.cooldown.essentials.CommandsAliases
+import com.mairwunnx.projectessentials.core.extensions.isPlayerSender
+import com.mairwunnx.projectessentials.core.extensions.sendMsg
+import com.mairwunnx.projectessentials.core.helpers.ONLY_PLAYER_CAN
+import com.mairwunnx.projectessentials.core.helpers.PERMISSION_LEVEL
+import com.mairwunnx.projectessentials.projectessentialshome.EntryPoint
+import com.mairwunnx.projectessentials.projectessentialshome.EntryPoint.Companion.hasPermission
 import com.mairwunnx.projectessentials.projectessentialshome.models.HomeModel
 import com.mairwunnx.projectessentials.projectessentialshome.storage.StorageBase
-import com.mairwunnx.projectessentialscooldown.essentials.CommandsAliases
-import com.mairwunnx.projectessentialscore.extensions.isPlayerSender
-import com.mairwunnx.projectessentialscore.extensions.sendMsg
-import com.mairwunnx.projectessentialscore.helpers.ONLY_PLAYER_CAN
-import com.mairwunnx.projectessentialscore.helpers.PERMISSION_LEVEL
-import com.mairwunnx.projectessentialspermissions.permissions.PermissionsAPI
 import com.mojang.brigadier.CommandDispatcher
 import com.mojang.brigadier.arguments.StringArgumentType
 import com.mojang.brigadier.builder.LiteralArgumentBuilder.literal
@@ -16,13 +17,14 @@ import net.minecraft.command.CommandSource
 import net.minecraft.command.Commands
 import org.apache.logging.log4j.LogManager
 
-@Suppress("DuplicatedCode")
 object SetHomeCommand {
     private val aliases = arrayOf("sethome", "esethome")
     private val logger = LogManager.getLogger()
 
     fun register(dispatcher: CommandDispatcher<CommandSource>) {
-        logger.info("    - register \"/sethome\" command ...")
+        logger.info("Register \"/sethome\" command")
+        applyCommandAliases()
+
         aliases.forEach { command ->
             dispatcher.register(
                 literal<CommandSource>(command).executes {
@@ -36,25 +38,17 @@ object SetHomeCommand {
                 )
             )
         }
-        applyCommandAliases()
     }
 
     private fun applyCommandAliases() {
-        try {
-            Class.forName(
-                "com.mairwunnx.projectessentialscooldown.essentials.CommandsAliases"
-            )
-            CommandsAliases.aliases["sethome"] = aliases.toMutableList()
-            logger.info("        - applying aliases: $aliases")
-        } catch (_: ClassNotFoundException) {
-            // ignored
-        }
+        if (!EntryPoint.cooldownsInstalled) return
+        CommandsAliases.aliases["sethome"] = aliases.toMutableList()
     }
 
     private fun execute(c: CommandContext<CommandSource>): Int {
         if (c.isPlayerSender()) {
             val player = c.source.asPlayer()
-            if (PermissionsAPI.hasPermission(player.name.string, "ess.home.set")) {
+            if (hasPermission(player, "ess.home.set")) {
                 val playerUUID = player.uniqueID.toString()
                 val homeName: String = try {
                     StringArgumentType.getString(c, "home name")
