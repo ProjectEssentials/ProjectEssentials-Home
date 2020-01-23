@@ -1,4 +1,4 @@
-package com.mairwunnx.projectessentials.projectessentialshome.models
+package com.mairwunnx.projectessentials.home.models
 
 import com.mairwunnx.projectessentials.core.extensions.empty
 import kotlinx.serialization.Serializable

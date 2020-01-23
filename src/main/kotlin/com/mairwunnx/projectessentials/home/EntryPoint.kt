@@ -1,11 +1,11 @@
-package com.mairwunnx.projectessentials.projectessentialshome
+package com.mairwunnx.projectessentials.home
 
 import com.mairwunnx.projectessentials.core.EssBase
+import com.mairwunnx.projectessentials.home.commands.DelHomeCommand
+import com.mairwunnx.projectessentials.home.commands.HomeCommand
+import com.mairwunnx.projectessentials.home.commands.SetHomeCommand
+import com.mairwunnx.projectessentials.home.storage.StorageBase
 import com.mairwunnx.projectessentials.permissions.permissions.PermissionsAPI
-import com.mairwunnx.projectessentials.projectessentialshome.commands.DelHomeCommand
-import com.mairwunnx.projectessentials.projectessentialshome.commands.HomeCommand
-import com.mairwunnx.projectessentials.projectessentialshome.commands.SetHomeCommand
-import com.mairwunnx.projectessentials.projectessentialshome.storage.StorageBase
 import com.mojang.brigadier.CommandDispatcher
 import net.minecraft.command.CommandSource
 import net.minecraft.entity.player.ServerPlayerEntity

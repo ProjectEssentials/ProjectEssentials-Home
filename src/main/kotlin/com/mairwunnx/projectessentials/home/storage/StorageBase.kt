@@ -1,8 +1,8 @@
-package com.mairwunnx.projectessentials.projectessentialshome.storage
+package com.mairwunnx.projectessentials.home.storage
 
 import com.mairwunnx.projectessentials.core.helpers.MOD_CONFIG_FOLDER
 import com.mairwunnx.projectessentials.core.helpers.jsonInstance
-import com.mairwunnx.projectessentials.projectessentialshome.models.HomeModel
+import com.mairwunnx.projectessentials.home.models.HomeModel
 import org.apache.logging.log4j.LogManager
 import java.io.File
 import java.io.FileNotFoundException

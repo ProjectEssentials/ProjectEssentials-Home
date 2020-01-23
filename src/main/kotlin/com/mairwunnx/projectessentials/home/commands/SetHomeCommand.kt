@@ -1,14 +1,14 @@
-package com.mairwunnx.projectessentials.projectessentialshome.commands
+package com.mairwunnx.projectessentials.home.commands
 
 import com.mairwunnx.projectessentials.cooldown.essentials.CommandsAliases
 import com.mairwunnx.projectessentials.core.extensions.isPlayerSender
 import com.mairwunnx.projectessentials.core.extensions.sendMsg
 import com.mairwunnx.projectessentials.core.helpers.ONLY_PLAYER_CAN
 import com.mairwunnx.projectessentials.core.helpers.PERMISSION_LEVEL
-import com.mairwunnx.projectessentials.projectessentialshome.EntryPoint
-import com.mairwunnx.projectessentials.projectessentialshome.EntryPoint.Companion.hasPermission
-import com.mairwunnx.projectessentials.projectessentialshome.models.HomeModel
-import com.mairwunnx.projectessentials.projectessentialshome.storage.StorageBase
+import com.mairwunnx.projectessentials.home.EntryPoint
+import com.mairwunnx.projectessentials.home.EntryPoint.Companion.hasPermission
+import com.mairwunnx.projectessentials.home.models.HomeModel
+import com.mairwunnx.projectessentials.home.storage.StorageBase
 import com.mojang.brigadier.CommandDispatcher
 import com.mojang.brigadier.arguments.BoolArgumentType
 import com.mojang.brigadier.arguments.StringArgumentType
