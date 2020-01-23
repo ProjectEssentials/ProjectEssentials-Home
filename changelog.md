@@ -34,7 +34,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `createConfigDirs` method from `StorageBase`.
 - `UseExperimental` annotation for `StorageBase` class.
 
-## [1.14.4-1.0.0~~.0~~] - 2019-10-13
+## [1.14.4-1.0.0 ~~.0~~] - 2019-10-13
 
 ### Added
 - Initial release of Project Essentials Home as Project Essentials part.
