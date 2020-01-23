@@ -17,7 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Removing previous home if override enabled.
 
 ### Changed
-- Gradle wrapper version updated. 
+- Gradle wrapper version updated.
 - Java plugin removed from buildscript.
 - Project Essentials dependencies updated.
 - Kotlin and Kotlinx Serialization dependencies updated.
