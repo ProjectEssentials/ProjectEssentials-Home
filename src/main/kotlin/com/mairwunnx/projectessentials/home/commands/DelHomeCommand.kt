@@ -22,7 +22,7 @@ object DelHomeCommand {
     private val logger = LogManager.getLogger()
 
     fun register(dispatcher: CommandDispatcher<CommandSource>) {
-        logger.info("Register \"/delhome\" command ...")
+        logger.info("Register \"/delhome\" command")
         aliases.forEach { command ->
             dispatcher.register(
                 literal<CommandSource>(command).executes {

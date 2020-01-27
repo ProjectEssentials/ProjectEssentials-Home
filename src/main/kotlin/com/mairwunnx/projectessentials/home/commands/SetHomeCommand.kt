@@ -96,14 +96,16 @@ object SetHomeCommand {
                 )
                 StorageBase.setData(playerUUID, HomeModel(homeModel))
                 sendMsg("home", c.source, "home.set.success", homeName)
-                logger.info("New home point for ${player.name.string} installed with data: ")
-                logger.info("    - name: $homeName")
-                logger.info("    - world / world id: $clientWorld / $worldId")
-                logger.info("    - xpos: $xPos")
-                logger.info("    - ypos: $yPos")
-                logger.info("    - zpos: $zPos")
-                logger.info("    - yaw: $yaw")
-                logger.info("    - pitch: $pitch")
+                logger.info(
+                    "\n" +
+                            "New home point for ${player.name.string} installed with data: \n" +
+                            "    - name: $homeName\n" +
+                            "    - world / world id: $clientWorld / $worldId\n" +
+                            "    - xpos: $xPos\n" +
+                            "    - ypos: $yPos\n" +
+                            "    - zpos: $zPos\n" +
+                            "    - pitch: $pitch"
+                )
                 logger.info("Executed command \"/sethome\" from ${player.name.string}")
             } else {
                 sendMsg("home", c.source, "home.set.restricted")

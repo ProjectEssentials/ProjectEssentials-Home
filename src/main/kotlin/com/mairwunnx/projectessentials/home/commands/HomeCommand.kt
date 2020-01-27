@@ -25,7 +25,7 @@ object HomeCommand {
     private val logger = LogManager.getLogger()
 
     fun register(dispatcher: CommandDispatcher<CommandSource>) {
-        logger.info("Register \"/home\" command ...")
+        logger.info("Register \"/home\" command")
         applyCommandAliases()
 
         aliases.forEach { command ->
