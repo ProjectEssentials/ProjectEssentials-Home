@@ -6,6 +6,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.14.4-1.1.1] - 2020-01-27
+
+### Changed
+- Logger message with logging new home data.
+
+### Fixed
+- Incorrect operator level for executing home commands.
+
 ## [1.14.4-1.1.0] - 2020-01-23
 
 ### Added

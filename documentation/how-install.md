@@ -15,10 +15,10 @@ Downloads: [Cooldown](https://github.com/ProjectEssentials/ProjectEssentials-Coo
 ├── config
 ├── libraries
 ├── mods (that's how it should be)
-│   ├── Project Essentials Core-MOD-1.14.4-1.X.X.X.jar (mandatory)
-│   ├── Project Essentials Cooldown-1.14.4-1.X.X.X.jar (recommended)
-│   ├── Project Essentials Permissions-1.14.4-1.X.X.X.jar (recommended)
-│   └── Project Essentials Home-1.14.4-1.X.X.X.jar
+│   ├── Project Essentials Core-MOD-1.14.4-1.X.X.jar (mandatory)
+│   ├── Project Essentials Cooldown-1.14.4-1.X.X.jar (recommended)
+│   ├── Project Essentials Permissions-1.14.4-1.X.X.jar (recommended)
+│   └── Project Essentials Home-1.14.4-1.X.X.jar
 └── ...
 ```
 
