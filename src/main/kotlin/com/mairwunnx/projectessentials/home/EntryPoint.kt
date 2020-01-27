@@ -23,7 +23,7 @@ class EntryPoint : EssBase() {
 
     init {
         modInstance = this
-        modVersion = "1.14.4-1.1.0"
+        modVersion = "1.14.4-1.1.1"
         logBaseInfo()
         validateForgeVersion()
         MinecraftForge.EVENT_BUS.register(this)
@@ -75,7 +75,7 @@ class EntryPoint : EssBase() {
         var cooldownsInstalled: Boolean = false
         var permissionsInstalled: Boolean = false
 
-        fun hasPermission(player: ServerPlayerEntity, node: String, opLevel: Int = 2): Boolean =
+        fun hasPermission(player: ServerPlayerEntity, node: String, opLevel: Int = 0): Boolean =
             if (permissionsInstalled) {
                 PermissionsAPI.hasPermission(player.name.string, node)
             } else {
