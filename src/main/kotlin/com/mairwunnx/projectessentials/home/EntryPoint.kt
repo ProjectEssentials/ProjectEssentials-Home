@@ -52,18 +52,14 @@ class EntryPoint : EssBase() {
 
     private fun loadAdditionalModules() {
         try {
-            Class.forName(
-                "com.mairwunnx.projectessentials.cooldown.essentials.CommandsAliases"
-            )
+            Class.forName(cooldownAPIClassPath)
             cooldownsInstalled = true
         } catch (_: ClassNotFoundException) {
             // ignored
         }
 
         try {
-            Class.forName(
-                "com.mairwunnx.projectessentials.permissions.permissions.PermissionsAPI"
-            )
+            Class.forName(permissionAPIClassPath)
             permissionsInstalled = true
         } catch (_: ClassNotFoundException) {
             // ignored
@@ -79,7 +75,7 @@ class EntryPoint : EssBase() {
             if (permissionsInstalled) {
                 PermissionsAPI.hasPermission(player.name.string, node)
             } else {
-                player.server.opPermissionLevel >= opLevel
+                player.hasPermissionLevel(opLevel)
             }
     }
 }
