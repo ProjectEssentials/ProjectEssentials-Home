@@ -1,12 +1,12 @@
 modLoader="javafml"
-loaderVersion="[28,)"
+loaderVersion="[31,)"
 issueTrackerURL="https://github.com/ProjectEssentials/ProjectEssentials-Home/issues"
 
 [[mods]]
     modId="project_essentials_home"
-    version="1.14.4-1.1.2"
+    version="1.15.2-1.0.0"
     displayName="Project Essentials Home"
-    updateJSONURL="https://raw.githubusercontent.com/ProjectEssentials/ProjectEssentials-Home/MC-1.14.4/update.json"
+    updateJSONURL="https://raw.githubusercontent.com/ProjectEssentials/ProjectEssentials-Home/MC-1.15.2/update.json"
     displayURL="https://github.com/ProjectEssentials/ProjectEssentials-Home"
     credits="Thanks JetBrains for Intellij IDEA license!"
     authors="MairwunNx (Pavel Erokhin)"
@@ -25,13 +25,13 @@ issueTrackerURL="https://github.com/ProjectEssentials/ProjectEssentials-Home/iss
 [[dependencies.projectessentialsspawn]]
     modId="forge"
     mandatory=true
-    versionRange="[28,)"
+    versionRange="[31,)"
     ordering="NONE"
     side="BOTH"
 
 [[dependencies.projectessentialsspawn]]
     modId="minecraft"
     mandatory=true
-    versionRange="[1.14.4]"
+    versionRange="[1.15.2]"
     ordering="NONE"
     side="BOTH"
