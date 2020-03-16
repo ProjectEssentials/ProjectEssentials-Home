@@ -1,13 +1,14 @@
 {
   "homepage": "https://github.com/ProjectEssentials/ProjectEssentials-Home",
   "1.14.4": {
+    "1.14.4-1.2.0": "Changelog for 1.2.0 https://github.com/ProjectEssentials/ProjectEssentials-Home/blob/MC-1.14.4/changelog.md#1144-120---2020-03-16",
     "1.14.4-1.1.2": "Changelog for 1.1.2 https://github.com/ProjectEssentials/ProjectEssentials-Home/blob/MC-1.14.4/changelog.md#1144-112---2020-02-08",
     "1.14.4-1.1.1": " - Changed logger message with logging new home data.\n - Incorrect operator level for executing home commands fixed.",
     "1.14.4-1.1.0": " - German support by @BixelPitch added.\n - Checks for availability `cooldown` and `permissions` modules added.\n - Compatibility with core `1.1.0.0` and permissions `1.1.0.0` added.\n - Checking on already exist home added.\n - `override` argument for overriding existing home added.\n -  Removing previous home if override enabled added.\n - Gradle wrapper version updated.\n - Java plugin removed from buildscript.\n - Project Essentials dependencies updated.\n - Kotlin and Kotlinx Serialization dependencies updated.\n - `gradle.properties` variable naming improved.\n - Usings `jsonInstance` from core module.\n - Issue tracker url in `mods.toml` file fixed.\n - Permissions module from mandatory dependencies removed.\n - Redundant logger messages removed.\n - Kotlin compiler option `-Xuse-experimental` from buildscript removed.\n - `createConfigDirs` method from `StorageBase` removed.\n - `UseExperimental` annotation for `StorageBase` class removed.",
     "1.14.4-1.0.0.0": " - Initial release of Project Essentials Home as Project Essentials part."
   },
   "promos": {
-    "1.14.4-latest": "1.14.4-1.1.2",
-    "1.14.4-recommended": "1.14.4-1.1.2"
+    "1.14.4-latest": "1.14.4-1.2.0",
+    "1.14.4-recommended": "1.14.4-1.2.0"
   }
 }
