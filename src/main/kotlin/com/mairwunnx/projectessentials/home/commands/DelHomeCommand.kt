@@ -6,7 +6,7 @@ import com.mairwunnx.projectessentials.core.helpers.throwOnlyPlayerCan
 import com.mairwunnx.projectessentials.core.helpers.throwPermissionLevel
 import com.mairwunnx.projectessentials.home.EntryPoint
 import com.mairwunnx.projectessentials.home.EntryPoint.Companion.hasPermission
-import com.mairwunnx.projectessentials.home.api.HomeAPI
+import com.mairwunnx.projectessentials.home.HomeAPI
 import com.mairwunnx.projectessentials.home.sendMessage
 import com.mojang.brigadier.CommandDispatcher
 import com.mojang.brigadier.arguments.StringArgumentType

@@ -1,4 +1,4 @@
-package com.mairwunnx.projectessentials.home.api
+package com.mairwunnx.projectessentials.home
 
 import com.mairwunnx.projectessentials.home.models.HomeModel
 import com.mairwunnx.projectessentials.home.storage.StorageBase
@@ -45,7 +45,11 @@ object HomeAPI {
                 it.home == name
             }
         } else {
-            if (contains(homes, name)) return false
+            if (contains(
+                    homes,
+                    name
+                )
+            ) return false
         }
 
         homes.add(

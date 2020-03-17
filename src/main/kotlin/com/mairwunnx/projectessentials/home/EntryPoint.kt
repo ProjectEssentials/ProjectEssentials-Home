@@ -3,7 +3,6 @@ package com.mairwunnx.projectessentials.home
 import com.mairwunnx.projectessentials.core.EssBase
 import com.mairwunnx.projectessentials.core.configuration.localization.LocalizationConfigurationUtils
 import com.mairwunnx.projectessentials.core.localization.processLocalizations
-import com.mairwunnx.projectessentials.home.api.HomeAPI
 import com.mairwunnx.projectessentials.home.commands.DelHomeCommand
 import com.mairwunnx.projectessentials.home.commands.HomeCommand
 import com.mairwunnx.projectessentials.home.commands.SetHomeCommand
