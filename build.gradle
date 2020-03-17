@@ -19,15 +19,19 @@ buildscript {
         classpath(
             "org.jetbrains.kotlin:kotlin-serialization:$kotlin_version"
         )
+        classpath(
+            "org.jetbrains.dokka:dokka-gradle-plugin:$dokka_version"
+        )
     }
 }
 
 plugins {
     id "maven-publish"
     id "java-library"
-    id 'maven'
+    id "maven"
 }
 
+apply(plugin: "org.jetbrains.dokka")
 apply(plugin: "net.minecraftforge.gradle")
 apply(plugin: "kotlin")
 apply(plugin: "kotlinx-serialization")
@@ -77,6 +81,7 @@ repositories {
     jcenter()
     mavenCentral()
     maven { url("https://libraries.minecraft.net") }
+    maven { url "https://jitpack.io" }
     maven {
         name = "GitHubPackages"
         url = uri "https://maven.pkg.github.com/projectessentials/projectessentials-core"
@@ -123,6 +128,13 @@ dependencies {
     )
 }
 
+dokka {
+    outputFormat = 'html'
+    outputDirectory = "$buildDir/libs/docs"
+}
+
+project.tasks["jar"].dependsOn(project.tasks["dokka"])
+
 jar {
     manifest {
         attributes([
@@ -143,3 +155,35 @@ sourceCompatibility = targetCompatibility =
 
 compileKotlin.kotlinOptions.jvmTarget =
     compileTestKotlin.kotlinOptions.jvmTarget = project_jvm_version_target
+
+task sourcesJar(type: Jar) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+task dokkaJar(type: Jar) {
+    group = JavaBasePlugin.DOCUMENTATION_GROUP
+    description = "Assembles Kotlin docs with Dokka"
+    classifier = "javadoc"
+    from tasks.dokka as Object
+}
+
+publishing {
+    repositories {
+        maven {
+            name = "GitHubPackages"
+            url = uri "https://maven.pkg.github.com/projectessentials/projectessentials-home"
+            credentials {
+                username = System.getenv("GradleUser")
+                password = System.getenv("GradlePass")
+            }
+        }
+    }
+    publications {
+        gpr(MavenPublication) {
+            from components.java
+            artifact sourcesJar
+            artifact dokkaJar
+        }
+    }
+}
