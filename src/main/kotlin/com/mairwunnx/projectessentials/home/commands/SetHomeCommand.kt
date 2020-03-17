@@ -3,11 +3,12 @@ package com.mairwunnx.projectessentials.home.commands
 import com.mairwunnx.projectessentials.cooldown.essentials.CommandsAliases
 import com.mairwunnx.projectessentials.core.extensions.isPlayerSender
 import com.mairwunnx.projectessentials.core.extensions.sendMsg
-import com.mairwunnx.projectessentials.core.helpers.ONLY_PLAYER_CAN
-import com.mairwunnx.projectessentials.core.helpers.PERMISSION_LEVEL
+import com.mairwunnx.projectessentials.core.helpers.throwOnlyPlayerCan
+import com.mairwunnx.projectessentials.core.helpers.throwPermissionLevel
 import com.mairwunnx.projectessentials.home.EntryPoint
 import com.mairwunnx.projectessentials.home.EntryPoint.Companion.hasPermission
 import com.mairwunnx.projectessentials.home.models.HomeModel
+import com.mairwunnx.projectessentials.home.sendMessage
 import com.mairwunnx.projectessentials.home.storage.StorageBase
 import com.mojang.brigadier.CommandDispatcher
 import com.mojang.brigadier.arguments.BoolArgumentType
@@ -79,7 +80,7 @@ object SetHomeCommand {
                 if (!override) {
                     homeModel.forEach {
                         if (it.home == homeName) {
-                            sendMsg("home", c.source, "home.set.already_exist", homeName)
+                            sendMessage(c.source, "set.already_exist", homeName)
                             return 0
                         }
                     }
@@ -95,7 +96,7 @@ object SetHomeCommand {
                     )
                 )
                 StorageBase.setData(playerUUID, HomeModel(homeModel))
-                sendMsg("home", c.source, "home.set.success", homeName)
+                sendMessage(c.source, "set.success", homeName)
                 logger.info(
                     "\n" +
                             "New home point for ${player.name.string} installed with data: \n" +
@@ -109,14 +110,10 @@ object SetHomeCommand {
                 logger.info("Executed command \"/sethome\" from ${player.name.string}")
             } else {
                 sendMsg("home", c.source, "home.set.restricted")
-                logger.info(
-                    PERMISSION_LEVEL
-                        .replace("%0", player.name.string)
-                        .replace("%1", "sethome")
-                )
+                throwPermissionLevel(player.name.string, "sethome")
             }
         } else {
-            logger.info(ONLY_PLAYER_CAN.replace("%0", "sethome"))
+            throwOnlyPlayerCan("sethome")
         }
         return 0
     }
