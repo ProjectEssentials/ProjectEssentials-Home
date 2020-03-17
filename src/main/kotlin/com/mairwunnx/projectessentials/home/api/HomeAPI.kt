@@ -121,6 +121,8 @@ object HomeAPI {
      *
      * @return true if home exist otherwise false.
      *
+     * @see takeAll
+     *
      * @since 1.14.4-1.2.0
      */
     fun contains(
@@ -131,5 +133,23 @@ object HomeAPI {
             if (it.home == name) return true
         }
         return false
+    }
+
+    /**
+     * Saves user data to local storage, to json file.
+     */
+    fun save() = StorageBase.saveUserData()
+
+    /**
+     * Reloading configuration from local storage,
+     * with saving if argument `withSaving` true.
+     *
+     * @param withSaving if true then configuration
+     * will be saved before reloading. Default values
+     * is true.
+     */
+    fun reload(withSaving: Boolean = true) {
+        if (withSaving) save()
+        StorageBase.loadUserData()
     }
 }

@@ -7,9 +7,9 @@ import com.mairwunnx.projectessentials.core.helpers.throwOnlyPlayerCan
 import com.mairwunnx.projectessentials.core.helpers.throwPermissionLevel
 import com.mairwunnx.projectessentials.home.EntryPoint
 import com.mairwunnx.projectessentials.home.EntryPoint.Companion.hasPermission
+import com.mairwunnx.projectessentials.home.api.HomeAPI
 import com.mairwunnx.projectessentials.home.models.HomeModel
 import com.mairwunnx.projectessentials.home.sendMessage
-import com.mairwunnx.projectessentials.home.storage.StorageBase
 import com.mojang.brigadier.CommandDispatcher
 import com.mojang.brigadier.arguments.StringArgumentType
 import com.mojang.brigadier.builder.LiteralArgumentBuilder.literal
@@ -53,19 +53,17 @@ object HomeCommand {
         if (c.isPlayerSender()) {
             val player = c.source.asPlayer()
             if (hasPermission(player, "ess.home")) {
-                val playerUUID = player.uniqueID.toString()
                 val homeName: String = try {
                     StringArgumentType.getString(c, "home name")
                 } catch (_: IllegalArgumentException) {
                     "home"
                 }
-                val home = StorageBase.getData(playerUUID)
-                home.homes.forEach {
-                    if (it.home == homeName) {
-                        moveToHome(player, it)
-                        return 0
-                    }
+
+                HomeAPI.take(player, homeName)?.let {
+                    moveToHome(player, it)
+                    return 0
                 }
+
                 sendMessage(c.source, "not_found", homeName)
                 logger.info("Player ${player.name.string} try teleport to not exist home $homeName")
             } else {
