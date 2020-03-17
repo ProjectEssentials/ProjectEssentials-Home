@@ -2,12 +2,12 @@ package com.mairwunnx.projectessentials.home.commands
 
 import com.mairwunnx.projectessentials.cooldown.essentials.CommandsAliases
 import com.mairwunnx.projectessentials.core.extensions.isPlayerSender
-import com.mairwunnx.projectessentials.core.extensions.sendMsg
-import com.mairwunnx.projectessentials.core.helpers.ONLY_PLAYER_CAN
-import com.mairwunnx.projectessentials.core.helpers.PERMISSION_LEVEL
+import com.mairwunnx.projectessentials.core.helpers.throwOnlyPlayerCan
+import com.mairwunnx.projectessentials.core.helpers.throwPermissionLevel
 import com.mairwunnx.projectessentials.home.EntryPoint
 import com.mairwunnx.projectessentials.home.EntryPoint.Companion.hasPermission
 import com.mairwunnx.projectessentials.home.models.HomeModel
+import com.mairwunnx.projectessentials.home.sendMessage
 import com.mairwunnx.projectessentials.home.storage.StorageBase
 import com.mojang.brigadier.CommandDispatcher
 import com.mojang.brigadier.arguments.StringArgumentType
@@ -59,22 +59,18 @@ object DelHomeCommand {
                     if (it.home == homeName) {
                         homeModel.remove(it)
                         StorageBase.setData(playerUUID, HomeModel(homeModel))
-                        sendMsg("home", c.source, "home.remove.success", homeName)
+                        sendMessage(c.source, "remove.success", homeName)
                         logger.info("Executed command \"/delhome\" from ${player.name.string}")
                         return 0
                     }
                 }
-                sendMsg("home", c.source, "home.not_found", homeName)
+                sendMessage(c.source, "not_found", homeName)
             } else {
-                sendMsg("home", c.source, "home.remove.restricted")
-                logger.info(
-                    PERMISSION_LEVEL
-                        .replace("%0", player.name.string)
-                        .replace("%1", "delhome")
-                )
+                sendMessage(c.source, "remove.restricted")
+                throwPermissionLevel(player.name.string, "delhome")
             }
         } else {
-            logger.info(ONLY_PLAYER_CAN.replace("%0", "delhome"))
+            throwOnlyPlayerCan("delhome")
         }
         return 0
     }
