@@ -1,14 +1,15 @@
 package com.mairwunnx.projectessentials.home.commands
 
 import com.mairwunnx.projectessentials.cooldown.essentials.CommandsAliases
+import com.mairwunnx.projectessentials.core.backlocation.BackLocationProvider
 import com.mairwunnx.projectessentials.core.extensions.isPlayerSender
-import com.mairwunnx.projectessentials.core.extensions.sendMsg
-import com.mairwunnx.projectessentials.core.helpers.ONLY_PLAYER_CAN
-import com.mairwunnx.projectessentials.core.helpers.PERMISSION_LEVEL
+import com.mairwunnx.projectessentials.core.helpers.throwOnlyPlayerCan
+import com.mairwunnx.projectessentials.core.helpers.throwPermissionLevel
 import com.mairwunnx.projectessentials.home.EntryPoint
 import com.mairwunnx.projectessentials.home.EntryPoint.Companion.hasPermission
+import com.mairwunnx.projectessentials.home.HomeAPI
 import com.mairwunnx.projectessentials.home.models.HomeModel
-import com.mairwunnx.projectessentials.home.storage.StorageBase
+import com.mairwunnx.projectessentials.home.sendMessage
 import com.mojang.brigadier.CommandDispatcher
 import com.mojang.brigadier.arguments.StringArgumentType
 import com.mojang.brigadier.builder.LiteralArgumentBuilder.literal
@@ -19,8 +20,7 @@ import net.minecraft.entity.player.ServerPlayerEntity
 import net.minecraft.world.dimension.DimensionType
 import org.apache.logging.log4j.LogManager
 
-@Suppress("DuplicatedCode")
-object HomeCommand {
+internal object HomeCommand {
     private val aliases = arrayOf("home", "ehome")
     private val logger = LogManager.getLogger()
 
@@ -52,31 +52,25 @@ object HomeCommand {
         if (c.isPlayerSender()) {
             val player = c.source.asPlayer()
             if (hasPermission(player, "ess.home")) {
-                val playerUUID = player.uniqueID.toString()
                 val homeName: String = try {
                     StringArgumentType.getString(c, "home name")
                 } catch (_: IllegalArgumentException) {
                     "home"
                 }
-                val home = StorageBase.getData(playerUUID)
-                home.homes.forEach {
-                    if (it.home == homeName) {
-                        moveToHome(player, it)
-                        return 0
-                    }
+
+                HomeAPI.take(player, homeName)?.let {
+                    moveToHome(player, it)
+                    return 0
                 }
-                sendMsg("home", c.source, "home.not_found", homeName)
+
+                sendMessage(c.source, "not_found", homeName)
                 logger.info("Player ${player.name.string} try teleport to not exist home $homeName")
             } else {
-                sendMsg("home", c.source, "home.restricted")
-                logger.info(
-                    PERMISSION_LEVEL
-                        .replace("%0", player.name.string)
-                        .replace("%1", "home")
-                )
+                sendMessage(c.source, "restricted")
+                throwPermissionLevel(player.name.string, "home")
             }
         } else {
-            logger.info(ONLY_PLAYER_CAN.replace("%0", "home"))
+            throwOnlyPlayerCan("home")
         }
         return 0
     }
@@ -93,10 +87,11 @@ object HomeCommand {
             DimensionType.getById(dimId) ?: DimensionType.OVERWORLD
         )
         if (player.world.worldInfo.worldName == clientWorld) {
+            BackLocationProvider.commit(player)
             player.teleport(targetWorld, xPos, yPos, zPos, yaw, pitch)
-            sendMsg("home", player.commandSource, "home.success", home.home)
+            sendMessage(player.commandSource, "success", home.home)
         } else {
-            sendMsg("home", player.commandSource, "home.not_found", home.home)
+            sendMessage(player.commandSource, "not_found", home.home)
             logger.info("Player ${player.name.string} try teleport to not exist home ${home.home}")
         }
     }

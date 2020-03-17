@@ -8,12 +8,12 @@ import java.io.File
 import java.io.FileNotFoundException
 import kotlin.system.measureTimeMillis
 
-object StorageBase {
+internal object StorageBase {
     private val logger = LogManager.getLogger()
     private val userHomeData = hashMapOf<String, HomeModel>()
     private val userDataFolder = MOD_CONFIG_FOLDER + File.separator + "user-data"
 
-    fun getData(uuid: String): HomeModel {
+    internal fun getData(uuid: String): HomeModel {
         if (userHomeData.containsKey(uuid)) {
             val requestedData = userHomeData[uuid] ?: HomeModel()
             logger.debug("Requested home data ($requestedData) for UUID ($uuid).")
@@ -23,12 +23,12 @@ object StorageBase {
         return HomeModel()
     }
 
-    fun setData(uuid: String, data: HomeModel) {
+    internal fun setData(uuid: String, data: HomeModel) {
         userHomeData[uuid] = data
         logger.debug("Installed home data (${data}) for UUID ($uuid).")
     }
 
-    fun loadUserData() {
+    internal fun loadUserData() {
         logger.info("Loading user home data configuration")
 
         File(userDataFolder).mkdirs()
@@ -56,7 +56,7 @@ object StorageBase {
         logger.info("Loading user home data done configurations with ${elapsedTime}ms")
     }
 
-    fun saveUserData() {
+    internal fun saveUserData() {
         File(userDataFolder).mkdirs()
         userHomeData.keys.forEach {
             val userId = it

@@ -3,12 +3,12 @@ package com.mairwunnx.projectessentials.home.commands
 import com.mairwunnx.projectessentials.cooldown.essentials.CommandsAliases
 import com.mairwunnx.projectessentials.core.extensions.isPlayerSender
 import com.mairwunnx.projectessentials.core.extensions.sendMsg
-import com.mairwunnx.projectessentials.core.helpers.ONLY_PLAYER_CAN
-import com.mairwunnx.projectessentials.core.helpers.PERMISSION_LEVEL
+import com.mairwunnx.projectessentials.core.helpers.throwOnlyPlayerCan
+import com.mairwunnx.projectessentials.core.helpers.throwPermissionLevel
 import com.mairwunnx.projectessentials.home.EntryPoint
 import com.mairwunnx.projectessentials.home.EntryPoint.Companion.hasPermission
-import com.mairwunnx.projectessentials.home.models.HomeModel
-import com.mairwunnx.projectessentials.home.storage.StorageBase
+import com.mairwunnx.projectessentials.home.HomeAPI
+import com.mairwunnx.projectessentials.home.sendMessage
 import com.mojang.brigadier.CommandDispatcher
 import com.mojang.brigadier.arguments.BoolArgumentType
 import com.mojang.brigadier.arguments.StringArgumentType
@@ -18,7 +18,7 @@ import net.minecraft.command.CommandSource
 import net.minecraft.command.Commands
 import org.apache.logging.log4j.LogManager
 
-object SetHomeCommand {
+internal object SetHomeCommand {
     private val aliases = arrayOf("sethome", "esethome")
     private val logger = LogManager.getLogger()
 
@@ -61,62 +61,26 @@ object SetHomeCommand {
         if (c.isPlayerSender()) {
             val player = c.source.asPlayer()
             if (hasPermission(player, "ess.home.set")) {
-                val playerUUID = player.uniqueID.toString()
                 val homeName: String = try {
                     StringArgumentType.getString(c, "home name")
                 } catch (_: IllegalArgumentException) {
                     "home"
                 }
-                val clientWorld = c.source.world.worldInfo.worldName
-                val worldId = c.source.world.worldType.id
-                val xPos = player.positionVec.x.toInt()
-                val yPos = player.positionVec.y.toInt()
-                val zPos = player.positionVec.z.toInt()
-                val yaw = player.rotationYaw
-                val pitch = player.rotationPitch
-                val homeModel = StorageBase.getData(playerUUID).homes
 
-                if (!override) {
-                    homeModel.forEach {
-                        if (it.home == homeName) {
-                            sendMsg("home", c.source, "home.set.already_exist", homeName)
-                            return 0
-                        }
-                    }
-                } else {
-                    homeModel.removeAll {
-                        it.home == homeName
-                    }
+                val result = HomeAPI.create(player, homeName, override)
+                if (!result) {
+                    sendMessage(c.source, "set.already_exist", homeName)
+                    return 0
                 }
 
-                homeModel.add(
-                    HomeModel.Home(
-                        homeName, clientWorld, worldId, xPos, yPos, zPos, yaw, pitch
-                    )
-                )
-                StorageBase.setData(playerUUID, HomeModel(homeModel))
-                sendMsg("home", c.source, "home.set.success", homeName)
-                logger.info(
-                    "\n" +
-                            "New home point for ${player.name.string} installed with data: \n" +
-                            "    - name: $homeName\n" +
-                            "    - world / world id: $clientWorld / $worldId\n" +
-                            "    - xpos: $xPos\n" +
-                            "    - ypos: $yPos\n" +
-                            "    - zpos: $zPos\n" +
-                            "    - pitch: $pitch"
-                )
+                sendMessage(c.source, "set.success", homeName)
                 logger.info("Executed command \"/sethome\" from ${player.name.string}")
             } else {
                 sendMsg("home", c.source, "home.set.restricted")
-                logger.info(
-                    PERMISSION_LEVEL
-                        .replace("%0", player.name.string)
-                        .replace("%1", "sethome")
-                )
+                throwPermissionLevel(player.name.string, "sethome")
             }
         } else {
-            logger.info(ONLY_PLAYER_CAN.replace("%0", "sethome"))
+            throwOnlyPlayerCan("sethome")
         }
         return 0
     }

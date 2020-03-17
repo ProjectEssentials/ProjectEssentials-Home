@@ -1,6 +1,8 @@
 package com.mairwunnx.projectessentials.home
 
 import com.mairwunnx.projectessentials.core.EssBase
+import com.mairwunnx.projectessentials.core.configuration.localization.LocalizationConfigurationUtils
+import com.mairwunnx.projectessentials.core.localization.processLocalizations
 import com.mairwunnx.projectessentials.home.commands.DelHomeCommand
 import com.mairwunnx.projectessentials.home.commands.HomeCommand
 import com.mairwunnx.projectessentials.home.commands.SetHomeCommand
@@ -18,16 +20,29 @@ import org.apache.logging.log4j.LogManager
 
 @Suppress("unused")
 @Mod("project_essentials_home")
-class EntryPoint : EssBase() {
+internal class EntryPoint : EssBase() {
     private val logger = LogManager.getLogger()
 
     init {
         modInstance = this
-        modVersion = "1.15.2-1.0.0"
+        modVersion = "1.15.2-1.1.0"
         logBaseInfo()
         validateForgeVersion()
         MinecraftForge.EVENT_BUS.register(this)
         StorageBase.loadUserData()
+        loadLocalization()
+    }
+
+    private fun loadLocalization() {
+        if (LocalizationConfigurationUtils.getConfig().enabled) {
+            processLocalizations(
+                EntryPoint::class.java, listOf(
+                    "/assets/projectessentialshome/lang/en_us.json",
+                    "/assets/projectessentialshome/lang/ru_ru.json",
+                    "/assets/projectessentialshome/lang/de_de.json"
+                )
+            )
+        }
     }
 
     @SubscribeEvent
@@ -47,7 +62,7 @@ class EntryPoint : EssBase() {
     @Suppress("UNUSED_PARAMETER")
     @SubscribeEvent
     fun onServerStopping(it: FMLServerStoppingEvent) {
-        StorageBase.saveUserData()
+        HomeAPI.save()
     }
 
     private fun loadAdditionalModules() {
