@@ -16,7 +16,7 @@ import net.minecraft.command.CommandSource
 import net.minecraft.command.Commands
 import org.apache.logging.log4j.LogManager
 
-object DelHomeCommand {
+internal object DelHomeCommand {
     private val aliases = arrayOf("delhome", "edelhome", "removehome", "remhome")
     private val logger = LogManager.getLogger()
 
