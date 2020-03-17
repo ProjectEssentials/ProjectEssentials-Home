@@ -18,7 +18,7 @@ import net.minecraft.command.CommandSource
 import net.minecraft.command.Commands
 import org.apache.logging.log4j.LogManager
 
-object SetHomeCommand {
+internal object SetHomeCommand {
     private val aliases = arrayOf("sethome", "esethome")
     private val logger = LogManager.getLogger()
 
