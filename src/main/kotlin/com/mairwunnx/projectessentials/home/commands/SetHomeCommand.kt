@@ -7,9 +7,8 @@ import com.mairwunnx.projectessentials.core.helpers.throwOnlyPlayerCan
 import com.mairwunnx.projectessentials.core.helpers.throwPermissionLevel
 import com.mairwunnx.projectessentials.home.EntryPoint
 import com.mairwunnx.projectessentials.home.EntryPoint.Companion.hasPermission
-import com.mairwunnx.projectessentials.home.models.HomeModel
+import com.mairwunnx.projectessentials.home.api.HomeAPI
 import com.mairwunnx.projectessentials.home.sendMessage
-import com.mairwunnx.projectessentials.home.storage.StorageBase
 import com.mojang.brigadier.CommandDispatcher
 import com.mojang.brigadier.arguments.BoolArgumentType
 import com.mojang.brigadier.arguments.StringArgumentType
@@ -62,51 +61,19 @@ object SetHomeCommand {
         if (c.isPlayerSender()) {
             val player = c.source.asPlayer()
             if (hasPermission(player, "ess.home.set")) {
-                val playerUUID = player.uniqueID.toString()
                 val homeName: String = try {
                     StringArgumentType.getString(c, "home name")
                 } catch (_: IllegalArgumentException) {
                     "home"
                 }
-                val clientWorld = c.source.world.worldInfo.worldName
-                val worldId = c.source.world.worldType.id
-                val xPos = player.posX.toInt()
-                val yPos = player.posY.toInt()
-                val zPos = player.posZ.toInt()
-                val yaw = player.rotationYaw
-                val pitch = player.rotationPitch
-                val homeModel = StorageBase.getData(playerUUID).homes
 
-                if (!override) {
-                    homeModel.forEach {
-                        if (it.home == homeName) {
-                            sendMessage(c.source, "set.already_exist", homeName)
-                            return 0
-                        }
-                    }
-                } else {
-                    homeModel.removeAll {
-                        it.home == homeName
-                    }
+                val result = HomeAPI.create(player, homeName, override)
+                if (!result) {
+                    sendMessage(c.source, "set.already_exist", homeName)
+                    return 0
                 }
 
-                homeModel.add(
-                    HomeModel.Home(
-                        homeName, clientWorld, worldId, xPos, yPos, zPos, yaw, pitch
-                    )
-                )
-                StorageBase.setData(playerUUID, HomeModel(homeModel))
                 sendMessage(c.source, "set.success", homeName)
-                logger.info(
-                    "\n" +
-                            "New home point for ${player.name.string} installed with data: \n" +
-                            "    - name: $homeName\n" +
-                            "    - world / world id: $clientWorld / $worldId\n" +
-                            "    - xpos: $xPos\n" +
-                            "    - ypos: $yPos\n" +
-                            "    - zpos: $zPos\n" +
-                            "    - pitch: $pitch"
-                )
                 logger.info("Executed command \"/sethome\" from ${player.name.string}")
             } else {
                 sendMsg("home", c.source, "home.set.restricted")
