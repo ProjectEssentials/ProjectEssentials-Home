@@ -2,12 +2,12 @@ package com.mairwunnx.projectessentials.home.commands
 
 import com.mairwunnx.projectessentials.cooldown.essentials.CommandsAliases
 import com.mairwunnx.projectessentials.core.extensions.isPlayerSender
-import com.mairwunnx.projectessentials.core.extensions.sendMsg
-import com.mairwunnx.projectessentials.core.helpers.ONLY_PLAYER_CAN
-import com.mairwunnx.projectessentials.core.helpers.PERMISSION_LEVEL
+import com.mairwunnx.projectessentials.core.helpers.throwOnlyPlayerCan
+import com.mairwunnx.projectessentials.core.helpers.throwPermissionLevel
 import com.mairwunnx.projectessentials.home.EntryPoint
 import com.mairwunnx.projectessentials.home.EntryPoint.Companion.hasPermission
 import com.mairwunnx.projectessentials.home.models.HomeModel
+import com.mairwunnx.projectessentials.home.sendMessage
 import com.mairwunnx.projectessentials.home.storage.StorageBase
 import com.mojang.brigadier.CommandDispatcher
 import com.mojang.brigadier.arguments.StringArgumentType
@@ -65,18 +65,14 @@ object HomeCommand {
                         return 0
                     }
                 }
-                sendMsg("home", c.source, "home.not_found", homeName)
+                sendMessage(c.source, "not_found", homeName)
                 logger.info("Player ${player.name.string} try teleport to not exist home $homeName")
             } else {
-                sendMsg("home", c.source, "home.restricted")
-                logger.info(
-                    PERMISSION_LEVEL
-                        .replace("%0", player.name.string)
-                        .replace("%1", "home")
-                )
+                sendMessage(c.source, "restricted")
+                throwPermissionLevel(player.name.string, "home")
             }
         } else {
-            logger.info(ONLY_PLAYER_CAN.replace("%0", "home"))
+            throwOnlyPlayerCan("home")
         }
         return 0
     }
@@ -94,9 +90,9 @@ object HomeCommand {
         )
         if (player.world.worldInfo.worldName == clientWorld) {
             player.teleport(targetWorld, xPos, yPos, zPos, yaw, pitch)
-            sendMsg("home", player.commandSource, "home.success", home.home)
+            sendMessage(player.commandSource, "success", home.home)
         } else {
-            sendMsg("home", player.commandSource, "home.not_found", home.home)
+            sendMessage(player.commandSource, "not_found", home.home)
             logger.info("Player ${player.name.string} try teleport to not exist home ${home.home}")
         }
     }
