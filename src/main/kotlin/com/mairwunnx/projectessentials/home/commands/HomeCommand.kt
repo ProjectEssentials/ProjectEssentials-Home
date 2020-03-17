@@ -20,8 +20,7 @@ import net.minecraft.entity.player.ServerPlayerEntity
 import net.minecraft.world.dimension.DimensionType
 import org.apache.logging.log4j.LogManager
 
-@Suppress("DuplicatedCode")
-object HomeCommand {
+internal object HomeCommand {
     private val aliases = arrayOf("home", "ehome")
     private val logger = LogManager.getLogger()
 
