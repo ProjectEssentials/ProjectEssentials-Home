@@ -21,7 +21,7 @@ import org.apache.logging.log4j.LogManager
 
 @Suppress("unused")
 @Mod("project_essentials_home")
-class EntryPoint : EssBase() {
+internal class EntryPoint : EssBase() {
     private val logger = LogManager.getLogger()
 
     init {
