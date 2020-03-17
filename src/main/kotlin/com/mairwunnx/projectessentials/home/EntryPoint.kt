@@ -1,6 +1,8 @@
 package com.mairwunnx.projectessentials.home
 
 import com.mairwunnx.projectessentials.core.EssBase
+import com.mairwunnx.projectessentials.core.configuration.localization.LocalizationConfigurationUtils
+import com.mairwunnx.projectessentials.core.localization.processLocalizations
 import com.mairwunnx.projectessentials.home.commands.DelHomeCommand
 import com.mairwunnx.projectessentials.home.commands.HomeCommand
 import com.mairwunnx.projectessentials.home.commands.SetHomeCommand
@@ -28,6 +30,19 @@ class EntryPoint : EssBase() {
         validateForgeVersion()
         MinecraftForge.EVENT_BUS.register(this)
         StorageBase.loadUserData()
+        loadLocalization()
+    }
+
+    private fun loadLocalization() {
+        if (LocalizationConfigurationUtils.getConfig().enabled) {
+            processLocalizations(
+                EntryPoint::class.java, listOf(
+                    "/assets/projectessentialshome/lang/en_us.json",
+                    "/assets/projectessentialshome/lang/ru_ru.json",
+                    "/assets/projectessentialshome/lang/de_de.json"
+                )
+            )
+        }
     }
 
     @SubscribeEvent
