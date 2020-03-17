@@ -6,9 +6,8 @@ import com.mairwunnx.projectessentials.core.helpers.throwOnlyPlayerCan
 import com.mairwunnx.projectessentials.core.helpers.throwPermissionLevel
 import com.mairwunnx.projectessentials.home.EntryPoint
 import com.mairwunnx.projectessentials.home.EntryPoint.Companion.hasPermission
-import com.mairwunnx.projectessentials.home.models.HomeModel
+import com.mairwunnx.projectessentials.home.api.HomeAPI
 import com.mairwunnx.projectessentials.home.sendMessage
-import com.mairwunnx.projectessentials.home.storage.StorageBase
 import com.mojang.brigadier.CommandDispatcher
 import com.mojang.brigadier.arguments.StringArgumentType
 import com.mojang.brigadier.builder.LiteralArgumentBuilder.literal
@@ -48,22 +47,19 @@ object DelHomeCommand {
         if (c.isPlayerSender()) {
             val player = c.source.asPlayer()
             if (hasPermission(player, "ess.home.remove")) {
-                val playerUUID = player.uniqueID.toString()
                 val homeName: String = try {
                     StringArgumentType.getString(c, "home name")
                 } catch (_: IllegalArgumentException) {
                     "home"
                 }
-                val homeModel = StorageBase.getData(playerUUID).homes
-                StorageBase.getData(playerUUID).homes.forEach {
-                    if (it.home == homeName) {
-                        homeModel.remove(it)
-                        StorageBase.setData(playerUUID, HomeModel(homeModel))
-                        sendMessage(c.source, "remove.success", homeName)
-                        logger.info("Executed command \"/delhome\" from ${player.name.string}")
-                        return 0
-                    }
+
+                val result = HomeAPI.remove(player, homeName)
+                if (result) {
+                    sendMessage(c.source, "remove.success", homeName)
+                    logger.info("Executed command \"/delhome\" from ${player.name.string}")
+                    return 0
                 }
+
                 sendMessage(c.source, "not_found", homeName)
             } else {
                 sendMessage(c.source, "remove.restricted")
