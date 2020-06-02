@@ -27,5 +27,12 @@ inline val homeLiteral: LiteralArgumentBuilder<CommandSource>
                     } else emptyList<String>()
                 }, builder
             )
-        }
-    )
+        }.executes { HomeCommand.process(it) }
+    ).executes { HomeCommand.process(it) }
+
+inline val setHomeLiteral: LiteralArgumentBuilder<CommandSource>
+    get() = literal<CommandSource>("set-home").then(
+        Commands.argument(
+            "home", StringArgumentType.string()
+        ).executes { SetHomeCommand.process(it) }
+    ).executes { SetHomeCommand.process(it) }

@@ -12,7 +12,7 @@ import com.mairwunnx.projectessentials.home.teleportToHome
 import com.mojang.brigadier.context.CommandContext
 import net.minecraft.command.CommandSource
 
-object HomeCommand : CommandBase(homeLiteral) {
+object HomeCommand : CommandBase(homeLiteral, false) {
     override val name = "home"
     override fun process(context: CommandContext<CommandSource>) = 0.also {
         fun out(status: String, vararg args: String) = MessagingAPI.sendMessage(
