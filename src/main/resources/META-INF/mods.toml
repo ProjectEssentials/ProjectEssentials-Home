@@ -11,8 +11,8 @@ issueTrackerURL="https://github.com/ProjectEssentials/ProjectEssentials-Home/iss
     credits="hujle, JetBrains, all forge developers, and other contributors"
     authors="MairwunNx (Pavel Erokhin)"
     description='''
-    Project Essentials Home - additional module for Essentials;
-    Just controlling player homies positions.
+    A wonderful module not to lose your home! The module allows you to create,
+    delete and teleport to homes.
     '''
 
 [[dependencies.projectessentialspermissions]]
