@@ -11,8 +11,8 @@ import net.minecraft.command.CommandSource
 import net.minecraft.command.Commands
 import net.minecraft.command.ISuggestionProvider
 
-val homeLiteral: LiteralArgumentBuilder<CommandSource> =
-    literal<CommandSource>("home").then(
+inline val homeLiteral: LiteralArgumentBuilder<CommandSource>
+    get() = literal<CommandSource>("home").then(
         Commands.argument(
             "home", StringArgumentType.string()
         ).suggests { ctx, builder ->
