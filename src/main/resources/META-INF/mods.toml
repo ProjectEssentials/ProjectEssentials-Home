@@ -8,7 +8,7 @@ issueTrackerURL="https://github.com/ProjectEssentials/ProjectEssentials-Home/iss
     displayName="Project Essentials Home"
     updateJSONURL="https://raw.githubusercontent.com/ProjectEssentials/ProjectEssentials-Home/MC-1.14.4/updatev2.json"
     displayURL="https://github.com/ProjectEssentials/ProjectEssentials-Home"
-    credits="Thanks JetBrains for Intellij IDEA license!"
+    credits="hujle, JetBrains, all forge developers, and other contributors"
     authors="MairwunNx (Pavel Erokhin)"
     description='''
     Project Essentials Home - additional module for Essentials;
