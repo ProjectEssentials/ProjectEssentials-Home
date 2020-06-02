@@ -1,73 +1,45 @@
 package com.mairwunnx.projectessentials.home.commands
 
-import com.mairwunnx.projectessentials.cooldown.essentials.CommandsAliases
-import com.mairwunnx.projectessentials.core.extensions.isPlayerSender
-import com.mairwunnx.projectessentials.core.helpers.throwOnlyPlayerCan
-import com.mairwunnx.projectessentials.core.helpers.throwPermissionLevel
-import com.mairwunnx.projectessentials.home.EntryPoint
-import com.mairwunnx.projectessentials.home.EntryPoint.Companion.hasPermission
-import com.mairwunnx.projectessentials.home.HomeAPI
-import com.mairwunnx.projectessentials.home.sendMessage
-import com.mojang.brigadier.CommandDispatcher
-import com.mojang.brigadier.arguments.StringArgumentType
-import com.mojang.brigadier.builder.LiteralArgumentBuilder.literal
+import com.mairwunnx.projectessentials.core.api.v1.MESSAGE_MODULE_PREFIX
+import com.mairwunnx.projectessentials.core.api.v1.commands.CommandAPI
+import com.mairwunnx.projectessentials.core.api.v1.commands.CommandBase
+import com.mairwunnx.projectessentials.core.api.v1.extensions.getPlayer
+import com.mairwunnx.projectessentials.core.api.v1.messaging.MessagingAPI
+import com.mairwunnx.projectessentials.core.api.v1.messaging.ServerMessagingAPI
+import com.mairwunnx.projectessentials.home.helpers.validateAndExecute
+import com.mairwunnx.projectessentials.home.homeConfiguration
 import com.mojang.brigadier.context.CommandContext
 import net.minecraft.command.CommandSource
-import net.minecraft.command.Commands
-import org.apache.logging.log4j.LogManager
 
-internal object DelHomeCommand {
-    private val aliases = arrayOf("delhome", "edelhome", "removehome", "remhome")
-    private val logger = LogManager.getLogger()
+object DelHomeCommand : CommandBase(delHomeLiteral, false) {
+    override val name = "del-home"
 
-    fun register(dispatcher: CommandDispatcher<CommandSource>) {
-        logger.info("Register \"/delhome\" command")
-        aliases.forEach { command ->
-            dispatcher.register(
-                literal<CommandSource>(command).executes {
-                    return@executes execute(it)
-                }.then(
-                    Commands.argument(
-                        "home name", StringArgumentType.string()
-                    ).executes {
-                        return@executes execute(it)
-                    }
-                )
-            )
-        }
-        applyCommandAliases()
-    }
+    override fun process(context: CommandContext<CommandSource>) = 0.also {
+        fun out(status: String, vararg args: String) = MessagingAPI.sendMessage(
+            context.getPlayer()!!, "${MESSAGE_MODULE_PREFIX}home.delhome.$status", args = *args
+        )
 
-    private fun applyCommandAliases() {
-        if (!EntryPoint.cooldownsInstalled) return
-        CommandsAliases.aliases["delhome"] = aliases.toMutableList()
-    }
-
-    private fun execute(c: CommandContext<CommandSource>): Int {
-        if (c.isPlayerSender()) {
-            val player = c.source.asPlayer()
-            if (hasPermission(player, "ess.home.remove")) {
-                val homeName: String = try {
-                    StringArgumentType.getString(c, "home name")
-                } catch (_: IllegalArgumentException) {
-                    "home"
-                }
-
-                val result = HomeAPI.remove(player, homeName)
-                if (result) {
-                    sendMessage(c.source, "remove.success", homeName)
-                    logger.info("Executed command \"/delhome\" from ${player.name.string}")
-                    return 0
-                }
-
-                sendMessage(c.source, "not_found", homeName)
+        validateAndExecute(context, "ess.home.remove", 0) { isServer ->
+            if (isServer) {
+                ServerMessagingAPI.throwOnlyPlayerCan()
             } else {
-                sendMessage(c.source, "remove.restricted")
-                throwPermissionLevel(player.name.string, "delhome")
+                val player = context.getPlayer()!!
+                val name = if (CommandAPI.getStringExisting(context, "home")) {
+                    CommandAPI.getString(context, "home")
+                } else "home"
+
+                homeConfiguration.users.asSequence().find {
+                    it.name == player.name.string || it.uuid == player.uniqueID.toString()
+                }?.let { user ->
+                    user.homes.asSequence().find {
+                        it.home == name
+                    }?.let {
+                        user.homes.removeIf { it.home == it.home }.also {
+                            out("success", name).also { super.process(context) }
+                        }
+                    } ?: run { out("not_found", name) }
+                } ?: run { out("not_found", name) }
             }
-        } else {
-            throwOnlyPlayerCan("delhome")
         }
-        return 0
     }
 }

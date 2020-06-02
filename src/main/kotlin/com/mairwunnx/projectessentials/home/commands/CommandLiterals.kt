@@ -1,9 +1,10 @@
+@file:Suppress("DuplicatedCode")
+
 package com.mairwunnx.projectessentials.home.commands
 
-import com.mairwunnx.projectessentials.core.api.v1.configuration.ConfigurationAPI.getConfigurationByName
 import com.mairwunnx.projectessentials.core.api.v1.extensions.getPlayer
 import com.mairwunnx.projectessentials.core.api.v1.extensions.isPlayerSender
-import com.mairwunnx.projectessentials.home.configurations.HomeConfiguration
+import com.mairwunnx.projectessentials.home.homeConfiguration
 import com.mojang.brigadier.arguments.StringArgumentType
 import com.mojang.brigadier.builder.LiteralArgumentBuilder
 import com.mojang.brigadier.builder.LiteralArgumentBuilder.literal
@@ -17,9 +18,7 @@ inline val homeLiteral: LiteralArgumentBuilder<CommandSource>
             "home", StringArgumentType.string()
         ).suggests { ctx, builder ->
             ISuggestionProvider.suggest(
-                getConfigurationByName<HomeConfiguration>(
-                    "home"
-                ).take().let { model ->
+                homeConfiguration.let { model ->
                     if (ctx.isPlayerSender()) {
                         model.users.asSequence().find {
                             it.name == ctx.getPlayer()!!.name.string || it.uuid == ctx.getPlayer()!!.uniqueID.toString()
@@ -43,9 +42,7 @@ inline val delHomeLiteral: LiteralArgumentBuilder<CommandSource>
             "home", StringArgumentType.string()
         ).suggests { ctx, builder ->
             ISuggestionProvider.suggest(
-                getConfigurationByName<HomeConfiguration>(
-                    "home"
-                ).take().let { model ->
+                homeConfiguration.let { model ->
                     if (ctx.isPlayerSender()) {
                         model.users.asSequence().find {
                             it.name == ctx.getPlayer()!!.name.string || it.uuid == ctx.getPlayer()!!.uniqueID.toString()
