@@ -4,7 +4,7 @@ import com.mairwunnx.projectessentials.home.enums.HomeSelectStrategy
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class HomeConfigurationModel(
+data class HomeSettingsConfigurationModel(
     var respawnAtHomeAfterDeath: Boolean = true,
     var respawnHomeSelectStrategy: HomeSelectStrategy = HomeSelectStrategy.Last,
     var playSoundOnTeleport: Boolean = false,
