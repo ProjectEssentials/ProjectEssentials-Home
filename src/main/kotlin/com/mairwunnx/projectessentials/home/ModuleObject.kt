@@ -9,6 +9,8 @@ import com.mairwunnx.projectessentials.core.api.v1.module.IModule
 import com.mairwunnx.projectessentials.home.commands.DelHomeCommand
 import com.mairwunnx.projectessentials.home.commands.HomeCommand
 import com.mairwunnx.projectessentials.home.commands.SetHomeCommand
+import com.mairwunnx.projectessentials.home.configurations.HomeConfiguration
+import com.mairwunnx.projectessentials.home.configurations.HomeSettingsConfiguration
 import net.minecraftforge.common.MinecraftForge.EVENT_BUS
 import net.minecraftforge.fml.InterModComms
 import net.minecraftforge.fml.common.Mod
@@ -54,7 +56,8 @@ class ModuleObject : IModule {
                 HomeCommand::class.java,
                 DelHomeCommand::class.java,
                 HomeConfiguration::class.java,
-                HomeSettingsConfiguration::class.java
+                HomeSettingsConfiguration::class.java,
+                ModuleObject::class.java
             )
         }
     }
