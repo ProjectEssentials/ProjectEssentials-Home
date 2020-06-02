@@ -16,7 +16,7 @@ object HomeCommand : CommandBase(homeLiteral, false) {
     override val name = "home"
     override fun process(context: CommandContext<CommandSource>) = 0.also {
         fun out(status: String, vararg args: String) = MessagingAPI.sendMessage(
-            context.getPlayer()!!, "${MESSAGE_MODULE_PREFIX}home.$status", args = *args
+            context.getPlayer()!!, "${MESSAGE_MODULE_PREFIX}home.home.$status", args = *args
         )
 
         validateAndExecute(context, "ess.home.teleport", 0) { isServer ->
