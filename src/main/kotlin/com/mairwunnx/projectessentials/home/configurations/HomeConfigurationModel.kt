@@ -15,7 +15,7 @@ data class HomeConfigurationModel(
         @Serializable
         data class Home(
             var home: String,
-            var worldId: Int,
+            var dimensionId: Int,
             var xPos: Int,
             var yPos: Int,
             var zPos: Int,
