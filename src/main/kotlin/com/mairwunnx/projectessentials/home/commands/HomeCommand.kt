@@ -35,10 +35,10 @@ object HomeCommand : CommandBase(homeLiteral) {
                         it.home == name
                     }?.let {
                         teleportToHome(player, it).also {
-                            out("success").also { super.process(context) }
+                            out("success", name).also { super.process(context) }
                         }
-                    } ?: run { out("not_found") }
-                } ?: run { out("not_found") }
+                    } ?: run { out("not_found", name) }
+                } ?: run { out("not_found", name) }
             }
         }
     }
