@@ -1,3 +1,5 @@
+@file:Suppress("unused")
+
 package com.mairwunnx.projectessentials.home
 
 import com.mairwunnx.projectessentials.core.api.v1.IMCLocalizationMessage
