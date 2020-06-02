@@ -36,3 +36,22 @@ inline val setHomeLiteral: LiteralArgumentBuilder<CommandSource>
             "home", StringArgumentType.string()
         ).executes { SetHomeCommand.process(it) }
     ).executes { SetHomeCommand.process(it) }
+
+inline val delHomeLiteral: LiteralArgumentBuilder<CommandSource>
+    get() = literal<CommandSource>("del-home").then(
+        Commands.argument(
+            "home", StringArgumentType.string()
+        ).suggests { ctx, builder ->
+            ISuggestionProvider.suggest(
+                getConfigurationByName<HomeConfiguration>(
+                    "home"
+                ).take().let { model ->
+                    if (ctx.isPlayerSender()) {
+                        model.users.asSequence().find {
+                            it.name == ctx.getPlayer()!!.name.string || it.uuid == ctx.getPlayer()!!.uniqueID.toString()
+                        }?.homes?.asSequence()?.map { it.home }?.toList() ?: emptyList<String>()
+                    } else emptyList<String>()
+                }, builder
+            )
+        }.executes { DelHomeCommand.process(it) }
+    ).executes { DelHomeCommand.process(it) }
