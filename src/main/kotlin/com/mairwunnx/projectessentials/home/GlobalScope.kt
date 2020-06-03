@@ -1,6 +1,5 @@
 package com.mairwunnx.projectessentials.home
 
-import com.mairwunnx.projectessentials.core.api.v1.commands.back.BackLocationAPI
 import com.mairwunnx.projectessentials.core.api.v1.configuration.ConfigurationAPI
 import com.mairwunnx.projectessentials.core.api.v1.extensions.playSound
 import com.mairwunnx.projectessentials.home.configurations.HomeConfiguration
@@ -24,7 +23,6 @@ val homeSettingsConfiguration by lazy {
 }
 
 fun teleportToHome(player: ServerPlayerEntity, home: HomeConfigurationModel.User.Home) {
-    BackLocationAPI.commit(player)
     val world = player.server.getWorld(
         DimensionType.getById(home.dimensionId) ?: DimensionType.OVERWORLD
     )

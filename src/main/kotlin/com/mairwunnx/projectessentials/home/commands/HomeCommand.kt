@@ -3,6 +3,7 @@ package com.mairwunnx.projectessentials.home.commands
 import com.mairwunnx.projectessentials.core.api.v1.MESSAGE_MODULE_PREFIX
 import com.mairwunnx.projectessentials.core.api.v1.commands.CommandAPI
 import com.mairwunnx.projectessentials.core.api.v1.commands.CommandBase
+import com.mairwunnx.projectessentials.core.api.v1.commands.back.BackLocationAPI
 import com.mairwunnx.projectessentials.core.api.v1.extensions.getPlayer
 import com.mairwunnx.projectessentials.core.api.v1.messaging.MessagingAPI
 import com.mairwunnx.projectessentials.core.api.v1.messaging.ServerMessagingAPI
@@ -35,6 +36,7 @@ object HomeCommand : CommandBase(homeLiteral, false) {
                         it.home == name
                     }?.let {
                         teleportToHome(player, it).also {
+                            BackLocationAPI.commit(player)
                             out("success", name).also { super.process(context) }
                         }
                     } ?: run { out("not_found", name) }

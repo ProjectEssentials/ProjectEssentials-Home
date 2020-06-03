@@ -13,7 +13,12 @@ import com.mairwunnx.projectessentials.home.commands.HomeCommand
 import com.mairwunnx.projectessentials.home.commands.SetHomeCommand
 import com.mairwunnx.projectessentials.home.configurations.HomeConfiguration
 import com.mairwunnx.projectessentials.home.configurations.HomeSettingsConfiguration
+import com.mairwunnx.projectessentials.home.enums.HomeSelectStrategy.First
+import com.mairwunnx.projectessentials.home.enums.HomeSelectStrategy.Last
+import net.minecraft.entity.player.ServerPlayerEntity
 import net.minecraftforge.common.MinecraftForge.EVENT_BUS
+import net.minecraftforge.event.entity.player.PlayerEvent
+import net.minecraftforge.eventbus.api.SubscribeEvent
 import net.minecraftforge.fml.InterModComms
 import net.minecraftforge.fml.common.Mod
 
@@ -31,6 +36,20 @@ class ModuleObject : IModule {
         ) {
             sendLocalizationRequest()
             sendProvidersRequest()
+        }
+    }
+
+    @SubscribeEvent
+    fun onPlayerRespawn(event: PlayerEvent.PlayerRespawnEvent) {
+        val player = event.player as ServerPlayerEntity
+        homeConfiguration.users.asSequence().find {
+            it.name == player.name.string || it.uuid == player.uniqueID.toString()
+        }?.let {
+            if (it.homes.isEmpty()) return
+            when (homeSettingsConfiguration.respawnHomeSelectStrategy) {
+                Last -> teleportToHome(player, it.homes.last())
+                First -> teleportToHome(player, it.homes.first())
+            }
         }
     }
 
