@@ -9,5 +9,5 @@ data class HomeSettingsConfigurationModel(
     var respawnHomeSelectStrategy: HomeSelectStrategy = HomeSelectStrategy.Last,
     var playSoundOnTeleport: Boolean = false,
     var showEffectOnTeleport: Boolean = false,
-    var homeLimitations: Map<String, String> = mapOf("default" to "6")
+    var homeLimitations: Map<String, Int> = mapOf("default" to 2)
 )
