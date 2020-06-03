@@ -7,11 +7,14 @@ import com.mairwunnx.projectessentials.core.api.v1.extensions.currentDimensionId
 import com.mairwunnx.projectessentials.core.api.v1.extensions.getPlayer
 import com.mairwunnx.projectessentials.core.api.v1.messaging.MessagingAPI
 import com.mairwunnx.projectessentials.core.api.v1.messaging.ServerMessagingAPI
+import com.mairwunnx.projectessentials.core.api.v1.permissions.hasPermission
 import com.mairwunnx.projectessentials.home.configurations.HomeConfigurationModel
 import com.mairwunnx.projectessentials.home.helpers.validateAndExecute
 import com.mairwunnx.projectessentials.home.homeConfiguration
+import com.mairwunnx.projectessentials.home.homeSettingsConfiguration
 import com.mojang.brigadier.context.CommandContext
 import net.minecraft.command.CommandSource
+import net.minecraft.entity.player.ServerPlayerEntity
 
 object SetHomeCommand : CommandBase(setHomeLiteral, false) {
     override val name = "set-home"
@@ -36,15 +39,17 @@ object SetHomeCommand : CommandBase(setHomeLiteral, false) {
                         player.rotationYaw, player.rotationPitch
                     ).also { out("success", name).also { super.process(context) } }
 
-                    user?.homes?.add(fromUser()) ?: run {
-                        homeConfiguration.users.add(
-                            HomeConfigurationModel.User(
-                                player.name.string,
-                                player.uniqueID.toString(),
-                                mutableListOf(fromUser())
+                    if (!hasLimitations(player, user)) {
+                        user?.homes?.add(fromUser()) ?: run {
+                            homeConfiguration.users.add(
+                                HomeConfigurationModel.User(
+                                    player.name.string,
+                                    player.uniqueID.toString(),
+                                    mutableListOf(fromUser())
+                                )
                             )
-                        )
-                    }
+                        }
+                    } else out("limit")
                 }
 
                 homeConfiguration.users.asSequence().find {
@@ -56,5 +61,21 @@ object SetHomeCommand : CommandBase(setHomeLiteral, false) {
                 } ?: run { commit(null) }
             }
         }
+    }
+
+    private fun hasLimitations(
+        player: ServerPlayerEntity,
+        user: HomeConfigurationModel.User?
+    ): Boolean {
+        if (hasPermission(player, "ess.home.limit.except", 4)) return false
+        var allowed = 1
+        homeSettingsConfiguration.homeLimitations.also { map ->
+            homeSettingsConfiguration.homeLimitations.keys.asSequence().forEach {
+                if (hasPermission(player, "ess.home.limit.$it", 0)) {
+                    if (allowed < map.getValue(it)) allowed = map.getValue(it)
+                }
+            }
+        }
+        return if (user == null) false else user.homes.count() >= allowed
     }
 }
