@@ -1,10 +1,10 @@
 {
-  "project_essentials_home.home.restricted": "§cУ вас §7нет прав §cна телепортацию к дому.",
+  "project_essentials_home.restricted": "§cУ вас §7нет прав §cчтобы использовать эту команду.",
   "project_essentials_home.home.success": "§6Вы телепортированы к дому §7%s§6.",
-  "project_essentials_home.home.set.restricted": "§cУ вас §7нет прав §cна установку точки нового дома.",
-  "project_essentials_home.home.set.success": "§6Новая точка дома была установлена с именем §7\"%s\"§6.",
-  "project_essentials_home.home.remove.restricted": "§cУ вас §7нет прав §cна удаление точки нового дома.",
-  "project_essentials_home.home.remove.success": "§6Точка дома с именем §7\"%s\"§6 удалена.",
   "project_essentials_home.home.not_found": "§cТочка дома с именем §7\"%s\" §cне найдена.",
-  "project_essentials_home.home.set.already_exist": "§cТочка дома с именем §7\"%s\" §cуже существует."
+  "project_essentials_home.sethome.success": "§6Новая точка дома была установлена с именем §7\"%s\"§6.",
+  "project_essentials_home.sethome.exist": "§cТочка дома с именем §7\"%s\" §cуже существует.",
+  "project_essentials_home.sethome.limit": "§cВы достигли максимального количества домов.",
+  "project_essentials_home.delhome.success": "§6Точка дома с именем §7\"%s\"§6 удалена.",
+  "project_essentials_home.delhome.not_found": "§cТочка дома с именем §7\"%s\" §cне найдена."
 }

@@ -1,10 +1,10 @@
 {
-  "project_essentials_home.home.restricted": "§cYou §7don't have permission §cto teleport to home.",
+  "project_essentials_home.restricted": "§cYou §7don't have permission §cto use this command.",
   "project_essentials_home.home.success": "§6Teleported to home §7%s§6.",
-  "project_essentials_home.home.set.restricted": "§cYou §7don't have permission §cto set new home.",
-  "project_essentials_home.home.set.success": "§6New home with name §7\"%s\" §6has been saved.",
-  "project_essentials_home.home.remove.restricted": "§cYou §7don't have permission §cto set remove home.",
-  "project_essentials_home.home.remove.success": "§6Home with name §7\"%s\" §6has been removed.",
   "project_essentials_home.home.not_found": "§cHome with name §7\"%s\" §cnot found.",
-  "project_essentials_home.home.set.already_exist": "§cHome with name §7\"%s\" §calready exist."
+  "project_essentials_home.sethome.success": "§6New home with name §7\"%s\" §6has been saved.",
+  "project_essentials_home.sethome.exist": "§cHome with name §7\"%s\" §calready exist.",
+  "project_essentials_home.sethome.limit": "§cYou have reached the maximum number of houses.",
+  "project_essentials_home.delhome.success": "§6Home with name §7\"%s\" §6has been removed.",
+  "project_essentials_home.delhome.not_found": "§cHome with name §7\"%s\" §cnot found."
 }
