@@ -68,7 +68,7 @@ object SetHomeCommand : CommandBase(setHomeLiteral, false) {
         user: HomeConfigurationModel.User?
     ): Boolean {
         if (hasPermission(player, "ess.home.limit.except", 4)) return false
-        var allowed = 1
+        var allowed = Int.MAX_VALUE
         homeSettingsConfiguration.homeLimitations.also { map ->
             homeSettingsConfiguration.homeLimitations.keys.asSequence().forEach {
                 if (hasPermission(player, "ess.home.limit.$it", 0)) {
