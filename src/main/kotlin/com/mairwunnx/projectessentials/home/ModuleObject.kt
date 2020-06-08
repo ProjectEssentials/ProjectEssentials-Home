@@ -5,6 +5,7 @@ package com.mairwunnx.projectessentials.home
 import com.mairwunnx.projectessentials.core.api.v1.localization.LocalizationAPI
 import com.mairwunnx.projectessentials.core.api.v1.module.IModule
 import com.mairwunnx.projectessentials.core.api.v1.providers.ProviderAPI
+import com.mairwunnx.projectessentials.home.commands.ConfigureHomeCommand
 import com.mairwunnx.projectessentials.home.commands.DelHomeCommand
 import com.mairwunnx.projectessentials.home.commands.HomeCommand
 import com.mairwunnx.projectessentials.home.commands.SetHomeCommand
@@ -36,6 +37,7 @@ class ModuleObject : IModule {
             SetHomeCommand::class.java,
             HomeCommand::class.java,
             DelHomeCommand::class.java,
+            ConfigureHomeCommand::class.java,
             HomeConfiguration::class.java,
             HomeSettingsConfiguration::class.java,
             ModuleObject::class.java
