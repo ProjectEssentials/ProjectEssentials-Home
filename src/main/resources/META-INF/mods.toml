@@ -4,21 +4,21 @@ issueTrackerURL="https://github.com/ProjectEssentials/ProjectEssentials-Home/iss
 
 [[mods]]
     modId="project_essentials_home"
-    version="1.15.2-1.1.0"
+    version="${file.jarVersion}"
     displayName="Project Essentials Home"
-    updateJSONURL="https://raw.githubusercontent.com/ProjectEssentials/ProjectEssentials-Home/MC-1.15.2/update.json"
+    updateJSONURL="https://raw.githubusercontent.com/ProjectEssentials/ProjectEssentials-Home/MC-1.15.2/updatev2.json"
     displayURL="https://github.com/ProjectEssentials/ProjectEssentials-Home"
-    credits="Thanks JetBrains for Intellij IDEA license!"
+    credits="hujle, JetBrains, all forge developers, and other contributors"
     authors="MairwunNx (Pavel Erokhin)"
     description='''
-    Project Essentials Home - additional module for Essentials;
-    Just controlling player homies positions.
+    A wonderful module not to lose your home! The module allows you to create,
+    delete and teleport to homes.
     '''
 
 [[dependencies.projectessentialspermissions]]
     modId="project_essentials_core"
     mandatory=true
-    versionRange="[1,)"
+    versionRange="[2,)"
     ordering="NONE"
     side="BOTH"
 
