@@ -2,7 +2,6 @@
 
 package com.mairwunnx.projectessentials.home
 
-import com.mairwunnx.projectessentials.core.api.v1.localization.Localization
 import com.mairwunnx.projectessentials.core.api.v1.localization.LocalizationAPI
 import com.mairwunnx.projectessentials.core.api.v1.module.IModule
 import com.mairwunnx.projectessentials.core.api.v1.providers.ProviderAPI
@@ -10,7 +9,6 @@ import com.mairwunnx.projectessentials.home.commands.DelHomeCommand
 import com.mairwunnx.projectessentials.home.commands.HomeCommand
 import com.mairwunnx.projectessentials.home.commands.SetHomeCommand
 import com.mairwunnx.projectessentials.home.configurations.HomeConfiguration
-import com.mairwunnx.projectessentials.home.configurations.HomeConfigurationModel
 import com.mairwunnx.projectessentials.home.configurations.HomeSettingsConfiguration
 import com.mairwunnx.projectessentials.home.enums.HomeSelectStrategy.First
 import com.mairwunnx.projectessentials.home.enums.HomeSelectStrategy.Last
@@ -19,14 +17,12 @@ import net.minecraftforge.common.MinecraftForge.EVENT_BUS
 import net.minecraftforge.event.entity.player.PlayerEvent
 import net.minecraftforge.eventbus.api.SubscribeEvent
 import net.minecraftforge.fml.common.Mod
-import net.minecraftforge.fml.event.server.FMLServerStartingEvent
-import org.apache.logging.log4j.LogManager
 
 @Mod("project_essentials_home")
 class ModuleObject : IModule {
     override val name = this::class.java.`package`.implementationTitle.split(" ").last()
     override val version = this::class.java.`package`.implementationVersion!!
-    override val loadIndex = 20
+    override val loadIndex = 4
     override fun init() = Unit
 
     init {
@@ -47,38 +43,14 @@ class ModuleObject : IModule {
     }
 
     private fun initLocalization() {
-        LocalizationAPI.apply(
-            Localization(
-                mutableListOf(
-                    "/assets/projectessentialshome/lang/en_us.json",
-                    "/assets/projectessentialshome/lang/ru_ru.json",
-                    "/assets/projectessentialshome/lang/de_de.json",
-                    "/assets/projectessentialshome/lang/zh_cn.json"
-                ), "core", this.javaClass
+        LocalizationAPI.apply(this.javaClass) {
+            mutableListOf(
+                "/assets/projectessentialshome/lang/en_us.json",
+                "/assets/projectessentialshome/lang/ru_ru.json",
+                "/assets/projectessentialshome/lang/de_de.json",
+                "/assets/projectessentialshome/lang/zh_cn.json"
             )
-        )
-//        LocalizationAPI.apply(this.javaClass) {
-//            mutableListOf(
-//                "/assets/projectessentialshome/lang/en_us.json",
-//                "/assets/projectessentialshome/lang/ru_ru.json",
-//                "/assets/projectessentialshome/lang/de_de.json",
-//                "/assets/projectessentialshome/lang/zh_cn.json"
-//            )
-//        }
-    }
-
-    @SubscribeEvent
-    fun onServerStart(event: FMLServerStartingEvent) {
-        LogManager.getLogger().info(homeConfiguration.users.count())
-        LogManager.getLogger().info("test")
-        LogManager.getLogger().info(
-            homeConfiguration.users.add(
-                HomeConfigurationModel.User(
-                    "test", "testuuid", mutableListOf()
-                )
-            )
-        )
-        LogManager.getLogger().info(homeConfiguration.users.count())
+        }
     }
 
     @SubscribeEvent
