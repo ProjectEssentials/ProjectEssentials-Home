@@ -20,6 +20,7 @@ Since 2.0.0 versions change log same for all supported minecraft versions.
 ### Fixed
 - `HomeConfiguration.kt` incorrect saving fixed.
 - `HomeSettingsConfiguration.kt` incorrect saving fixed.
+- `respawnAtHomeAfterDeath` setting ignoring fixed.
 
 ## [2.0.0-SNAPSHOT.1] - 2020-06-03
 
