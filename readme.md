@@ -1,18 +1,20 @@
-# ![image](assets/home_social.png)
+![](https://github.com/ProjectEssentials/ProjectEssentials-Assets/raw/ASSETS-20-Q2/assets/specific/home/header.png)
 
-## Lightweight home controller provider for forge
+### What is it?
+
+A wonderful module not to lose your home! The module allows you to create, delete and teleport to homes.
 
 ### Explore
 
-#### [Download mod](https://github.com/ProjectEssentials/ProjectEssentials-Home/releases/download/v1.14.4-1.2.0/Project.Essentials.Home-1.14.4-1.2.0.jar) · [How to install](https://mairwunnx.gitbook.io/project-essentials/project-essentials-home#how-to-install) · [Commands](https://mairwunnx.gitbook.io/project-essentials/project-essentials-home#commands-and-permissions) · [Configuration](https://mairwunnx.gitbook.io/project-essentials/project-essentials-home#configuration) · [Troubleshooting](https://github.com/ProjectEssentials/ProjectEssentials-Home/issues/new/choose) · [CurseForge](https://www.curseforge.com/minecraft/mc-mods/ProjectEssentials-Home) · [Change log](changelog.md)
+#### [Download mod](https://github.com/ProjectEssentials/ProjectEssentials-Home/releases/download/2.0.0%2BMC-1.14.4/Project.Essentials.Home-2.0.0+MC-1.14.4.jar) · [User guide](https://mairwunnx.gitbook.io/project-essentials/project-essentials-home#how-to-install) · [Troubleshooting](https://github.com/ProjectEssentials/ProjectEssentials-Home/issues/new/choose) · [Telegram](https://t.me/minecraftforge) · [Discord](https://discord.gg/VU9XZAt) · [Change log](https://github.com/ProjectEssentials/ProjectEssentials-Home/blob/master/changelog.md)
 
-### Compatibility
-
-This mod branch supported forge version `28.0.X` and `28.1.X` (Minecraft `1.14.4`).
+[![](https://github.com/ProjectEssentials/ProjectEssentials-Assets/raw/ASSETS-20-Q2/assets/common/support.png)](https://gist.github.com/MairwunNx/fda95062618db6880ef8ee06e1bba54f)
 
 ### Credits
 
-- Author: Pavel Erokhin [@mairwunnx](https://github.com/mairwunnx)
-- [JetBrains](https://www.jetbrains.com/) for Licenses
+- `hujle` for testing this mod and almost all modules in production
+- [KuroNoSeiHai](https://github.com/KuroNoSeiHai) for Chinese simplified translation
+- [JetBrains](https://www.jetbrains.com/) for product licenses
+- [BixelPitch](https://github.com/BixelPitch) for German translation
 
-[![image](https://github.com/ProjectEssentials/ProjectEssentials-Core/raw/MC-1.14.4/assets/support_social.png)](https://ko-fi.com/mairwunnx)
+### Inspired by: [EssentialsX](https://github.com/EssentialsX)
