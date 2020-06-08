@@ -1,6 +1,6 @@
-### What is it
-
 ![](https://github.com/ProjectEssentials/ProjectEssentials-Assets/raw/ASSETS-20-Q2/assets/specific/home/header.png)
+
+### What is it?
 
 A wonderful module not to lose your home! The module allows you to create, delete and teleport to homes.
 
