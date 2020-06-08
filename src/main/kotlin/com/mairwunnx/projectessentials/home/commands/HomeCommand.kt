@@ -35,8 +35,8 @@ object HomeCommand : CommandBase(homeLiteral, false) {
                     user.homes.asSequence().find {
                         it.home == name
                     }?.let {
+                        BackLocationAPI.commit(player)
                         teleportToHome(player, it).also {
-                            BackLocationAPI.commit(player)
                             out("success", name).also { super.process(context) }
                         }
                     } ?: run { out("not_found", name) }
