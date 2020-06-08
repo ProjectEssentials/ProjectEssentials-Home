@@ -54,6 +54,7 @@ Since 2.0.0 versions change log same for all supported minecraft versions.
 
 ### Fixed
 - Fixed crash with `server.commandManager.dispatcher`.
+- Incorrect behavior with different dimensions.
 
 ### Removed
 - Internal assets removed.
