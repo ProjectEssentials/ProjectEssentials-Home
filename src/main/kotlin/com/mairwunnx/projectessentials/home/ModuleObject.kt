@@ -55,6 +55,7 @@ class ModuleObject : IModule {
 
     @SubscribeEvent
     fun onPlayerRespawn(event: PlayerEvent.PlayerRespawnEvent) {
+        if (!homeSettingsConfiguration.respawnAtHomeAfterDeath) return
         val player = event.player as ServerPlayerEntity
         homeConfiguration.users.asSequence().find {
             it.name == player.name.string || it.uuid == player.uniqueID.toString()
