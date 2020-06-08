@@ -87,8 +87,7 @@ inline val configureHomeLiteral: LiteralArgumentBuilder<CommandSource>
             Commands.literal("respawn-home-select-strategy").then(
                 Commands.literal("set").then(
                     Commands.argument(
-                        "value",
-                        EnumArgument.enumArgument(HomeSelectStrategy::class.java)
+                        "value", EnumArgument.enumArgument(HomeSelectStrategy::class.java)
                     ).executes {
                         ConfigureHomeCommand.respawnHomeSelectStrategy(it)
                     }
