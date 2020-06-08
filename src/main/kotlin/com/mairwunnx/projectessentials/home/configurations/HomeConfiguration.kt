@@ -36,7 +36,7 @@ object HomeConfiguration : IConfiguration<HomeConfigurationModel> {
 
         logger.info("Saving configuration `${name}`")
         val raw = jsonInstance.stringify(
-            HomeConfigurationModel.serializer(), configuration
+            HomeConfigurationModel.serializer(), configurationData
         )
         try {
             File(path).writeText(raw)
