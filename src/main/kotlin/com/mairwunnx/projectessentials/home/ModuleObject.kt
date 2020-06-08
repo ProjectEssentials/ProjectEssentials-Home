@@ -28,8 +28,7 @@ class ModuleObject : IModule {
 
     init {
         EVENT_BUS.register(this)
-        initProviders()
-        initLocalization()
+        initProviders().also { initLocalization() }
     }
 
     private fun initProviders() {
