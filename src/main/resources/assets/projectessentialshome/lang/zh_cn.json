@@ -1,8 +1,10 @@
 {
+  "project_essentials_home.restricted": "§c你 §7没有权限 §c使用此命令。",
   "project_essentials_home.home.success": "§6传送到家 §7%s§6。",
   "project_essentials_home.home.not_found": "§c家 §7\"%s\" §c无法寻找。",
   "project_essentials_home.sethome.success": "§6新家 §7\"%s\" §6已被保存。",
   "project_essentials_home.sethome.exist": "§c家 §7\"%s\" §c已经存在。",
+  "project_essentials_home.sethome.limit": "§c您已经到达家的数量上限。",
   "project_essentials_home.delhome.success": "§6家 §7\"%s\" §6已被移除。",
   "project_essentials_home.delhome.not_found": "§c家 §7\"%s\" §c无法寻找。"
 }
