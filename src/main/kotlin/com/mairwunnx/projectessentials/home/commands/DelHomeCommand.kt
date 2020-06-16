@@ -33,8 +33,8 @@ object DelHomeCommand : CommandBase(delHomeLiteral, false) {
                 }?.let { user ->
                     user.homes.asSequence().find {
                         it.home == name
-                    }?.let {
-                        user.homes.removeIf { it.home == it.home }.also {
+                    }?.let { home ->
+                        user.homes.removeIf { it.home == home.home }.also {
                             out("success", name).also { super.process(context) }
                         }
                     } ?: run { out("not_found", name) }
